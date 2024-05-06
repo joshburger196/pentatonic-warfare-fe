@@ -1,0 +1,11 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      {{musician?.name}}<app-genre-chip [chipGenre]="musician?.genre"></app-genre-chip>
+    </ion-card-title>
+  </ion-card-header>
+  
+  <ion-card-content>
+    {{musician?.battleStats?.hp}}/{{musician?.baseStats?.hp}}
+  </ion-card-content>
+</ion-card>
