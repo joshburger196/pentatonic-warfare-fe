@@ -5,24 +5,28 @@ import { Stats } from "./stats";
 
 export class Musician
 {
+    id:string;
     name:string;
     genre:genreId;
-    secondGenre:genreId|null;
+    secondGenre:genreId|undefined;
     instrument:Instrument;
-    secondInstrument:Instrument|null;
+    secondInstrument:Instrument|undefined;
     possiblePowers:Power[];
     knownPowers:Power[];
     exp:number;
     lvl:number;
     baseStats:Stats;
     battleStats:Stats;
+
+    hasAlreadyTakenTurn:boolean=false;
     constructor
     (
+        id:string,
         name:string,
         genre:genreId,
-        secondGenre:genreId|null,
+        secondGenre:genreId|undefined,
         instrument:Instrument,
-        secondInstrument:Instrument|null,
+        secondInstrument:Instrument|undefined,
         possiblePowers:Power[],
         knownPowers:Power[],
         exp:number,
@@ -31,6 +35,7 @@ export class Musician
         battleStats:Stats,
     )
     {
+        this.id=id;
         this.name=name;
         this.genre=genre;
         this.secondGenre=secondGenre;

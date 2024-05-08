@@ -2,18 +2,20 @@
   <ion-toolbar>
     <ion-title>stage</ion-title>
   </ion-toolbar>
+
+  <app-band-stats-view [band]="opponentBand"></app-band-stats-view>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="opponent-stats">opponent stats
-    <app-stat-block
-     *ngFor="let opponent of opponentBand"
-     [musician]="opponent"
-    ></app-stat-block>
-  </div>
-  <div class="opponent-sprites">opponent sprites</div>
-  <div class="ally-sprites">ally sprites</div>
-  <div class="ally-stats">ally stats</div>
-  <div class="caption">caption</div>
-  <div class="control">control</div>
+
+  
+
+  <app-stage-screen></app-stage-screen>
+
 </ion-content>
+
+<ion-footer>
+
+  <app-battle-control [ownBand]="ownBand" [opponentBand]="opponentBand"></app-battle-control>
+
+</ion-footer>

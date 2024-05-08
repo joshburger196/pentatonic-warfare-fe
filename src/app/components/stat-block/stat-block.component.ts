@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Musician } from 'src/models/musician';
 
 @Component({
@@ -8,9 +8,17 @@ import { Musician } from 'src/models/musician';
 })
 export class StatBlockComponent  implements OnInit {
   @Input() musician:Musician|undefined;
+  @Input() clickable:boolean=false;
+  @Output("click") clickEventEmitter=new EventEmitter<Musician>();
+
+  cardClass:string="";
 
   constructor() { }
 
   ngOnInit() {}
 
+  onClick()
+  {
+    this.clickEventEmitter.emit();
+  }
 }

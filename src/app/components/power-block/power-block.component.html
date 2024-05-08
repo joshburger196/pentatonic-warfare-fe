@@ -1,0 +1,13 @@
+<ion-card [class]="cardClass" (click)="onClick()">
+  <div class="name-row flex-left">
+    <ion-text color="dark" class="name">{{power?.name}}</ion-text>
+    <app-genre-chip [chipGenre]="power?.genre"></app-genre-chip>
+  </div>
+
+  <div *ngIf="power!=undefined && power.damage>0">
+    <ion-icon color="danger" name="flame"></ion-icon>
+    {{power.damage}}
+    <ion-icon *ngIf="power?.isSingleTarget" name="person"></ion-icon>
+    <ion-icon *ngIf="!power?.isSingleTarget" name="people"></ion-icon>
+  </div>
+</ion-card>

@@ -3,7 +3,10 @@ div
     background-color:var(--bg-color);
     color:var(--text-color);
     font-weight: bold;
+
+    border:var(--border);
+
     width:min-content;
-    padding:3px 12px 3px 12px;
-    border-radius: 6px;
+    padding:0.2em 0.75em 0.3em 0.75em;
+    border-radius: 0.5em;
 }

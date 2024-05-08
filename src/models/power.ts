@@ -4,29 +4,29 @@ import { genreId } from "./genreEnum";
 export class Power
 {
     name:string;
-    type:genreId;
+    genre:genreId;
     description:string;
     damage:number;
     isSingleTarget:boolean;
-    effect:Effect|null;
-    effectChance:number|null;
-    effectIntensity:number|null;
-    effectDuration:number|null;
-    evolutionOf:Power|null;
+    effect:Effect|undefined;
+    effectChance:number|undefined;
+    effectIntensity:number|undefined;
+    effectDuration:number|undefined;
+    evolutionOf:Power|undefined;
     constructor(
         name:string,
-        type:genreId,
+        genre:genreId,
         description:string,
         damage:number,
         isSingleTarget:boolean,
-        effect:Effect|null,
-        effectChance:number|null,
-        effectIntensity:number|null,
-        effectDuration:number|null,
-        evolutionOf:Power|null)
+        effect:Effect|undefined,
+        effectChance:number|undefined,
+        effectIntensity:number|undefined,
+        effectDuration:number|undefined,
+        evolutionOf:Power|undefined)
     {
         this.name=name;
-        this.type=type;
+        this.genre=genre;
         this.description=description;
         this.damage=damage;
         this.isSingleTarget=isSingleTarget;

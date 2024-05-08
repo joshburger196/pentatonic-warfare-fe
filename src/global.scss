@@ -52,3 +52,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.flex-left
+{
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+ion-card
+{
+    border: 2px solid black;
+    margin:0.25rem;
+    padding:0.25rem;
+}

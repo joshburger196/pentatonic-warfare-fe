@@ -1,0 +1,97 @@
+<div class="parent-container">
+  <app-caption *ngIf="selfStatus=='turnStart'" text="It's your turn!" (click)="startTurn()"></app-caption>
+
+
+
+  <div *ngIf="selfStatus=='musicianChoice'">
+    <div class="flex-center hint">
+      <ion-text>Choose a musician!</ion-text>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="ownBand[0]" (click)="chooseMusician(0)"></app-stat-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="ownBand[1]" (click)="chooseMusician(1)"></app-stat-block>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="ownBand[2]" (click)="chooseMusician(2)"></app-stat-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="ownBand[3]" (click)="chooseMusician(3)"></app-stat-block>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+
+  <div *ngIf="selfStatus=='powerChoice'">
+    <div class="flex-center hint">
+      <ion-button *ngIf="selfStatus=='powerChoice'" color="dark" fill="clear" (click)="goBack()">
+        <ion-icon color="danger" name="play-back"></ion-icon>
+      </ion-button>
+      <ion-text>Choose a power!</ion-text>
+    </div>
+    
+    <ion-grid *ngIf="selfStatus=='powerChoice'">
+      <ion-row>
+        <ion-col>
+          <app-power-block [power]="powers[0]" (click)="choosePower(0)"></app-power-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-power-block [power]="powers[1]" (click)="choosePower(1)"></app-power-block>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <app-power-block [power]="powers[2]" (click)="choosePower(2)"></app-power-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-power-block [power]="powers[3]" (click)="choosePower(3)"></app-power-block>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+
+  <div *ngIf="selfStatus=='targetChoice'">
+    <div class="flex-center hint">
+      <ion-button *ngIf="selfStatus=='targetChoice'" color="dark" fill="clear" (click)="goBack()">
+        <ion-icon color="danger" name="play-back"></ion-icon>
+      </ion-button>
+      <ion-text>Choose a target!</ion-text>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="targets[0]" (click)="chooseTarget(0)"></app-stat-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="targets[1]" (click)="chooseTarget(1)"></app-stat-block>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="targets[2]" (click)="chooseTarget(2)"></app-stat-block>
+        </ion-col>
+          
+        <ion-col>
+          <app-stat-block class="option-card" [musician]="targets[3]" (click)="chooseTarget(3)"></app-stat-block>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>
