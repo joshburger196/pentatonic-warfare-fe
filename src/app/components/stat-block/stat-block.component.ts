@@ -9,16 +9,25 @@ import { Musician } from 'src/models/musician';
 export class StatBlockComponent  implements OnInit {
   @Input() musician:Musician|undefined;
   @Input() clickable:boolean=false;
-  @Output("click") clickEventEmitter=new EventEmitter<Musician>();
+  @Input() disabled:boolean=false;
+  @Output("clickEvent") clickEventEmitter=new EventEmitter<Musician>();
 
   cardClass:string="";
 
-  constructor() { }
+  constructor()
+  {}
 
-  ngOnInit() {}
+  ngOnInit() 
+  {
+    if(this.clickable)
+      this.cardClass="clickable";
+    if(this.disabled)
+      this.cardClass="disabled";
+  }
 
   onClick()
   {
-    this.clickEventEmitter.emit();
+    if(!this.disabled && this.clickable)
+      this.clickEventEmitter.emit();
   }
 }

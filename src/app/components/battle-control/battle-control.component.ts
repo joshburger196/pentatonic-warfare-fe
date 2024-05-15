@@ -13,7 +13,7 @@ export class BattleControlComponent  implements OnInit {
   @Input() opponentBand:Musician[]=[];
 
   selfStatus:menuStatus=menuStatus.turnStart;
-  selectedMusician:Musician|undefined;
+  iSelectedMusician:number=-1;
   powers:Power[]=[];
   selectedPower:Power|undefined;
   targets:Musician[]=[];
@@ -32,8 +32,8 @@ export class BattleControlComponent  implements OnInit {
   chooseMusician(index:number)
   {
     this.selfStatus=menuStatus.powerChoice;
-    this.selectedMusician=this.ownBand[index];
-    this.powers=this.selectedMusician.knownPowers;
+    this.iSelectedMusician=index;
+    this.powers=this.ownBand[this.iSelectedMusician].knownPowers;
     console.log("Musician chosen!")
   }
 
@@ -59,16 +59,39 @@ export class BattleControlComponent  implements OnInit {
   {
     this.selfStatus=menuStatus.musicianAction;
     //sendMoveToBackend to calculate new battleState
-    this.selectedMusician;
+    this.iSelectedMusician;
     this.selectedPower;
     this.selectedTarget;
+
+    this.ownBand[this.iSelectedMusician].hasAlreadyTakenTurn=true;
+
+    this.nextAction();
+  }
+
+  nextAction()
+  {
+    var isStillOwnTurn=false;
+    this.ownBand.forEach(musician => {
+      if(!musician.hasAlreadyTakenTurn)
+        isStillOwnTurn=true;
+    });
+
+    if(isStillOwnTurn)
+      this.startTurn();
+    else
+      this.endTurn();
+  }
+
+  endTurn()
+  {
+    this.selfStatus=menuStatus.turnEnd;
   }
 
   goBack()
   {
     if(this.selfStatus==menuStatus.powerChoice)
     {
-      this.selectedMusician=undefined;
+      this.iSelectedMusician=-1;
       this.powers=[];
       this.selfStatus=menuStatus.musicianChoice;
     }

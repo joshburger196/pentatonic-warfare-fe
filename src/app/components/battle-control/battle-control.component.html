@@ -10,21 +10,45 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <app-stat-block class="option-card" [musician]="ownBand[0]" (click)="chooseMusician(0)"></app-stat-block>
+          <app-stat-block
+            class="option-card"
+            [musician]="ownBand[0]"
+            (clickEvent)="chooseMusician(0)"
+            [clickable]="true"
+            [disabled]="ownBand[0].hasAlreadyTakenTurn">
+          </app-stat-block>
         </ion-col>
           
         <ion-col>
-          <app-stat-block class="option-card" [musician]="ownBand[1]" (click)="chooseMusician(1)"></app-stat-block>
+          <app-stat-block
+            class="option-card"
+            [musician]="ownBand[1]"
+            (clickEvent)="chooseMusician(1)"
+            [clickable]="true"
+            [disabled]="ownBand[1].hasAlreadyTakenTurn">
+          </app-stat-block>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <app-stat-block class="option-card" [musician]="ownBand[2]" (click)="chooseMusician(2)"></app-stat-block>
+          <app-stat-block
+            class="option-card"
+            [musician]="ownBand[2]"
+            (clickEvent)="chooseMusician(2)"
+            [clickable]="true"
+            [disabled]="ownBand[2].hasAlreadyTakenTurn">
+          </app-stat-block>
         </ion-col>
           
         <ion-col>
-          <app-stat-block class="option-card" [musician]="ownBand[3]" (click)="chooseMusician(3)"></app-stat-block>
+          <app-stat-block
+            class="option-card"
+            [musician]="ownBand[3]"
+            (clickEvent)="chooseMusician(3)"
+            [clickable]="true"
+            [disabled]="ownBand[3].hasAlreadyTakenTurn">
+          </app-stat-block>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -75,23 +99,51 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <app-stat-block class="option-card" [musician]="targets[0]" (click)="chooseTarget(0)"></app-stat-block>
+          <app-stat-block
+          class="option-card"
+          [musician]="targets[0]"
+          (clickEvent)="chooseTarget(0)"
+          [clickable]="true"
+          [disabled]="!targets[0].targetable"
+          ></app-stat-block>
         </ion-col>
           
         <ion-col>
-          <app-stat-block class="option-card" [musician]="targets[1]" (click)="chooseTarget(1)"></app-stat-block>
+          <app-stat-block
+          class="option-card"
+          [musician]="targets[1]"
+          (clickEvent)="chooseTarget(1)"
+          [clickable]="true"
+          [disabled]="!targets[1].targetable"
+          ></app-stat-block>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <app-stat-block class="option-card" [musician]="targets[2]" (click)="chooseTarget(2)"></app-stat-block>
+          <app-stat-block
+          class="option-card"
+          [musician]="targets[2]"
+          (clickEvent)="chooseTarget(2)"
+          [clickable]="true"
+          [disabled]="!targets[2].targetable"
+          ></app-stat-block>
         </ion-col>
           
         <ion-col>
-          <app-stat-block class="option-card" [musician]="targets[3]" (click)="chooseTarget(3)"></app-stat-block>
+          <app-stat-block
+          class="option-card"
+          [musician]="targets[3]"
+          (clickEvent)="chooseTarget(3)"
+          [clickable]="true"
+          [disabled]="!targets[3].targetable"
+          ></app-stat-block>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
+
+
+
+  <app-caption *ngIf="selfStatus=='turnEnd'" text="It's the opponent band's turn!" (click)="startTurn()"></app-caption>
 </div>

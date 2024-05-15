@@ -37,7 +37,9 @@ export class StagePage implements OnInit {
 
   battleStateObj={"ownBand":this.ownBand,"opponentBand":this.opponentBand,"turn":"own"};
 
-  constructor() { }
+  constructor()
+  {
+  }
 
   ngOnInit() {
   }

@@ -19,6 +19,7 @@ export class Musician
     battleStats:Stats;
 
     hasAlreadyTakenTurn:boolean=false;
+    targetable:boolean=true;
     constructor
     (
         id:string,
