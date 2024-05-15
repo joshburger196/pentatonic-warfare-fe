@@ -84,6 +84,11 @@ export class BattleControlComponent  implements OnInit {
 
   endTurn()
   {
+    //reset turn status for all musicians
+    for(var i=0;i<this.ownBand.length;i++)
+    {
+      this.ownBand[i].hasAlreadyTakenTurn=false;
+    }
     this.selfStatus=menuStatus.turnEnd;
   }
 
