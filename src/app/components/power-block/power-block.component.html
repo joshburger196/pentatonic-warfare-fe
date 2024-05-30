@@ -1,7 +1,7 @@
 <ion-card [class]="cardClass" (click)="onClick()">
   <div class="name-row flex-left">
     <ion-text color="dark" class="name">{{power?.name}}</ion-text>
-    <app-genre-chip [chipGenre]="power?.genre"></app-genre-chip>
+    <app-genre-chip [genreId]="power?.genre"></app-genre-chip>
   </div>
 
   <div *ngIf="power!=null && power.damage!=null && power.damage>0">

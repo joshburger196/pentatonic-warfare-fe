@@ -1,0 +1,11 @@
+[
+    {"id":"G000","name":"rock","color":"#ff5100","isColorDark":false},
+    {"id":"G001","name":"metal","color":"#9e0008","isColorDark":true},
+    {"id":"G002","name":"blues","color":"#002b8f","isColorDark":true},
+    {"id":"G003","name":"pop","color":"#d6d6d6","isColorDark":false},
+    {"id":"G004","name":"jazz","color":"#ff5100","isColorDark":false},
+    {"id":"G005","name":"prog","color":"#ff5100","isColorDark":false},
+    {"id":"G006","name":"psych","color":"#ff5100","isColorDark":false},
+    {"id":"G007","name":"funk","color":"#ff5100","isColorDark":false},
+    {"id":"G008","name":"wild","color":"#ff5100","isColorDark":false}
+]

@@ -1,0 +1,8 @@
+{
+    "R000":{"name":"Beginner","color":"#ff5100"},
+    "R001":{"name":"Hobbyist","color":"#9e0008"},
+    "R002":{"name":"Jammer","color":"#002b8f"},
+    "R003":{"name":"Pro","color":"#d6d6d6"},
+    "R004":{"name":"Virtuoso","color":"#ff5100"},
+    "R005":{"name":"Legend","color":"#ff51ff"}
+}

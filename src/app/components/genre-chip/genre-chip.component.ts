@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Genre } from 'src/app/models/genreClass';
-import { genreId } from 'src/app/models/genreEnum';
+import { genres } from 'src/assets/static-data/genres';
 
 @Component({
   selector: 'app-genre-chip',
@@ -8,30 +8,26 @@ import { genreId } from 'src/app/models/genreEnum';
   styleUrls: ['./genre-chip.component.scss'],
 })
 export class GenreChipComponent  implements OnInit {
-  @Input() chipGenre:string|undefined;
+  @Input() genreId:string|undefined;
   chipColor:string="";
+  chipText:string="";
   textColor:string="#000000";
   chipBorder:string="";
 
-  allGenres:Genre[]=
-  [
-    new Genre(genreId.metal,"#9e0008",true,[genreId.rock,genreId.pop],[genreId.wild,genreId.stnr]),
-    new Genre(genreId.rock,"#ff5100",false,[genreId.wild,genreId.pop],[genreId.metal,genreId.prog]),
-    new Genre(genreId.pop,"#d6d6d6",false,[genreId.prog,genreId.jazz],[genreId.pop,genreId.wild]),
-    new Genre(genreId.blues,"#002b8f",true,[genreId.stnr,genreId.prog],[genreId.funk,genreId.wild])
-  ]
+  allGenres:{"id":string,"name":string,"color":string,"isColorDark":string}[]=[];
 
-  constructor()
+  constructor(private http:HttpClient)
   {
     
   }
 
   ngOnInit() 
   {
-    this.allGenres.forEach((genre)=>
+    genres.forEach((genre)=>
     {
-      if(genre.id==this.chipGenre)
+      if(genre.id==this.genreId)
       {
+        this.chipText=genre.name;
         this.chipColor=genre.color;
         if(genre.isColorDark)
         { 
@@ -41,7 +37,6 @@ export class GenreChipComponent  implements OnInit {
         else
           this.chipBorder=" 1px solid darkgrey";
       }
-      
     })
   }
 
