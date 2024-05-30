@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Power } from 'src/models/power';
+import { Technique } from 'src/app/models/technique';
 
 @Component({
   selector: 'app-power-block',
@@ -8,8 +8,8 @@ import { Power } from 'src/models/power';
 })
 export class PowerBlockComponent  implements OnInit {
 
-  @Input() power:Power|undefined;
-  @Output("click") clickEventEmitter=new EventEmitter<Power>();
+  @Input() power:Technique|undefined;
+  @Output("click") clickEventEmitter=new EventEmitter<Technique>();
 
   cardClass:string="";
 

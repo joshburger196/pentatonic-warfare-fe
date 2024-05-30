@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Genre } from 'src/models/genreClass';
-import { genreId } from 'src/models/genreEnum';
+import { Genre } from 'src/app/models/genreClass';
+import { genreId } from 'src/app/models/genreEnum';
 
 @Component({
   selector: 'app-genre-chip',
@@ -8,17 +8,17 @@ import { genreId } from 'src/models/genreEnum';
   styleUrls: ['./genre-chip.component.scss'],
 })
 export class GenreChipComponent  implements OnInit {
-  @Input() chipGenre:genreId|undefined;
+  @Input() chipGenre:string|undefined;
   chipColor:string="";
   textColor:string="#000000";
   chipBorder:string="";
 
   allGenres:Genre[]=
   [
-    new Genre(genreId.metal,"#9e0008",true,[genreId.rock,genreId.pop],[genreId.hiphop,genreId.psych]),
-    new Genre(genreId.rock,"#ff5100",false,[genreId.hiphop,genreId.pop],[genreId.metal,genreId.prog]),
-    new Genre(genreId.pop,"#d6d6d6",false,[genreId.prog,genreId.jazz],[genreId.pop,genreId.hiphop]),
-    new Genre(genreId.blues,"#002b8f",true,[genreId.psych,genreId.prog],[genreId.synth,genreId.hiphop])
+    new Genre(genreId.metal,"#9e0008",true,[genreId.rock,genreId.pop],[genreId.wild,genreId.stnr]),
+    new Genre(genreId.rock,"#ff5100",false,[genreId.wild,genreId.pop],[genreId.metal,genreId.prog]),
+    new Genre(genreId.pop,"#d6d6d6",false,[genreId.prog,genreId.jazz],[genreId.pop,genreId.wild]),
+    new Genre(genreId.blues,"#002b8f",true,[genreId.stnr,genreId.prog],[genreId.funk,genreId.wild])
   ]
 
   constructor()

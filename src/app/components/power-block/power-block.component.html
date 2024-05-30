@@ -4,7 +4,7 @@
     <app-genre-chip [chipGenre]="power?.genre"></app-genre-chip>
   </div>
 
-  <div *ngIf="power!=undefined && power.damage>0">
+  <div *ngIf="power!=null && power.damage!=null && power.damage>0">
     <ion-icon color="danger" name="flame"></ion-icon>
     {{power.damage}}
     <ion-icon *ngIf="power?.isSingleTarget" name="person"></ion-icon>

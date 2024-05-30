@@ -2,10 +2,10 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab3Page } from './profile-tab.page';
+import { Tab3Page } from './account-tab.page';
 import { ExploreContainerComponentModule } from '../../components/explore-container/explore-container.module';
 
-import { Tab3PageRoutingModule } from './profile-tab-routing.module';
+import { Tab3PageRoutingModule } from './account-tab-routing.module';
 
 @NgModule({
   imports: [

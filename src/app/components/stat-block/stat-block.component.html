@@ -2,7 +2,6 @@
   <div class="name-row flex-left">
     <ion-text color="dark" class="name">{{musician?.name}}</ion-text>
     <app-genre-chip [chipGenre]="musician?.genre"></app-genre-chip>
-    <app-genre-chip *ngIf="musician?.secondGenre!=undefined" [chipGenre]="musician?.secondGenre"></app-genre-chip>
   </div>
 
   {{musician?.battleStats?.hp}}/{{musician?.baseStats?.hp}}

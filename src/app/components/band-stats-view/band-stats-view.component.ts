@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Musician } from 'src/models/musician';
+import { Musician } from 'src/app/models/musician';
 
 @Component({
   selector: 'app-band-stats-view',

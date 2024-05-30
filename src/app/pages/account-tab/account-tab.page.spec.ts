@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ExploreContainerComponentModule } from '../../components/explore-container/explore-container.module';
 
-import { Tab3Page } from './profile-tab.page';
+import { Tab3Page } from './account-tab.page';
 
 describe('Tab3Page', () => {
   let component: Tab3Page;

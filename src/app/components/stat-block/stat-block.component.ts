@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Musician } from 'src/models/musician';
+import { Musician } from 'src/app/models/musician';
 
 @Component({
   selector: 'app-stat-block',

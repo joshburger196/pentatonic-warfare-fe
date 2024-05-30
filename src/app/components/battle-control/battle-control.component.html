@@ -13,7 +13,7 @@
           <app-stat-block
             class="option-card"
             [musician]="ownBand[0]"
-            (clickEvent)="chooseMusician(0)"
+            (clickEvent)="selectMusician(0)"
             [clickable]="true"
             [disabled]="ownBand[0].hasAlreadyTakenTurn">
           </app-stat-block>
@@ -23,7 +23,7 @@
           <app-stat-block
             class="option-card"
             [musician]="ownBand[1]"
-            (clickEvent)="chooseMusician(1)"
+            (clickEvent)="selectMusician(1)"
             [clickable]="true"
             [disabled]="ownBand[1].hasAlreadyTakenTurn">
           </app-stat-block>
@@ -35,7 +35,7 @@
           <app-stat-block
             class="option-card"
             [musician]="ownBand[2]"
-            (clickEvent)="chooseMusician(2)"
+            (clickEvent)="selectMusician(2)"
             [clickable]="true"
             [disabled]="ownBand[2].hasAlreadyTakenTurn">
           </app-stat-block>
@@ -45,7 +45,7 @@
           <app-stat-block
             class="option-card"
             [musician]="ownBand[3]"
-            (clickEvent)="chooseMusician(3)"
+            (clickEvent)="selectMusician(3)"
             [clickable]="true"
             [disabled]="ownBand[3].hasAlreadyTakenTurn">
           </app-stat-block>
@@ -67,21 +67,21 @@
     <ion-grid *ngIf="selfStatus=='powerChoice'">
       <ion-row>
         <ion-col>
-          <app-power-block [power]="powers[0]" (click)="choosePower(0)"></app-power-block>
+          <app-power-block [power]="powers[0]" (click)="selectPower(0)"></app-power-block>
         </ion-col>
           
         <ion-col>
-          <app-power-block [power]="powers[1]" (click)="choosePower(1)"></app-power-block>
+          <app-power-block [power]="powers[1]" (click)="selectPower(1)"></app-power-block>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <app-power-block [power]="powers[2]" (click)="choosePower(2)"></app-power-block>
+          <app-power-block [power]="powers[2]" (click)="selectPower(2)"></app-power-block>
         </ion-col>
           
         <ion-col>
-          <app-power-block [power]="powers[3]" (click)="choosePower(3)"></app-power-block>
+          <app-power-block [power]="powers[3]" (click)="selectPower(3)"></app-power-block>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -102,7 +102,7 @@
           <app-stat-block
           class="option-card"
           [musician]="targets[0]"
-          (clickEvent)="chooseTarget(0)"
+          (clickEvent)="selectTarget(0)"
           [clickable]="true"
           [disabled]="!targets[0].targetable"
           ></app-stat-block>
@@ -112,7 +112,7 @@
           <app-stat-block
           class="option-card"
           [musician]="targets[1]"
-          (clickEvent)="chooseTarget(1)"
+          (clickEvent)="selectTarget(1)"
           [clickable]="true"
           [disabled]="!targets[1].targetable"
           ></app-stat-block>
@@ -124,7 +124,7 @@
           <app-stat-block
           class="option-card"
           [musician]="targets[2]"
-          (clickEvent)="chooseTarget(2)"
+          (clickEvent)="selectTarget(2)"
           [clickable]="true"
           [disabled]="!targets[2].targetable"
           ></app-stat-block>
@@ -134,7 +134,7 @@
           <app-stat-block
           class="option-card"
           [musician]="targets[3]"
-          (clickEvent)="chooseTarget(3)"
+          (clickEvent)="selectTarget(3)"
           [clickable]="true"
           [disabled]="!targets[3].targetable"
           ></app-stat-block>

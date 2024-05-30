@@ -16,12 +16,12 @@ const routes: Routes = [
         loadChildren: () => import('../pages/battle-tab/battle-tab.module').then(m => m.Tab2PageModule)
       },
       {
-        path: 'profile',
-        loadChildren: () => import('../pages/profile-tab/profile-tab.module').then(m => m.Tab3PageModule)
+        path: 'account',
+        loadChildren: () => import('../pages/account-tab/account-tab.module').then(m => m.Tab3PageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/battle',
+        redirectTo: '/tabs/account',
         pathMatch: 'full'
       }
     ]

@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { menuStatus } from 'src/models/menuStatus';
-import { Musician } from 'src/models/musician';
-import { Power } from 'src/models/power';
+import { menuStatus } from 'src/app/models/menuStatus';
+import { Musician } from 'src/app/models/musician';
+import { Technique } from 'src/app/models/technique';
 
 @Component({
   selector: 'app-battle-control',
@@ -14,8 +14,8 @@ export class BattleControlComponent  implements OnInit {
 
   selfStatus:menuStatus=menuStatus.turnStart;
   iSelectedMusician:number=-1;
-  powers:Power[]=[];
-  selectedPower:Power|undefined;
+  powers:Technique[]=[];
+  selectedPower:Technique|undefined;
   targets:Musician[]=[];
   selectedTarget:Musician|undefined;
 
@@ -29,15 +29,15 @@ export class BattleControlComponent  implements OnInit {
     console.log("Turn started!")
   }
 
-  chooseMusician(index:number)
+  selectMusician(index:number)
   {
     this.selfStatus=menuStatus.powerChoice;
     this.iSelectedMusician=index;
-    this.powers=this.ownBand[this.iSelectedMusician].knownPowers;
+    this.powers=this.ownBand[this.iSelectedMusician].knownTechniques;
     console.log("Musician chosen!")
   }
 
-  choosePower(index:number)
+  selectPower(index:number)
   {
     this.selectedPower=this.powers[index];
     if(this.selectedPower.isSingleTarget)
@@ -49,7 +49,7 @@ export class BattleControlComponent  implements OnInit {
       this.excecutePower();
   }
 
-  chooseTarget(index:number)
+  selectTarget(index:number)
   {
     this.selectedTarget=this.targets[index];
     this.excecutePower();
@@ -70,6 +70,8 @@ export class BattleControlComponent  implements OnInit {
 
   nextAction()
   {
+
+    //Check if there are musicians who haven't acted yet
     var isStillOwnTurn=false;
     this.ownBand.forEach(musician => {
       if(!musician.hasAlreadyTakenTurn)
@@ -86,9 +88,8 @@ export class BattleControlComponent  implements OnInit {
   {
     //reset turn status for all musicians
     for(var i=0;i<this.ownBand.length;i++)
-    {
       this.ownBand[i].hasAlreadyTakenTurn=false;
-    }
+
     this.selfStatus=menuStatus.turnEnd;
   }
 
