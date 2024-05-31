@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/account',
+        redirectTo: '/tabs/battle',
         pathMatch: 'full'
       }
     ]

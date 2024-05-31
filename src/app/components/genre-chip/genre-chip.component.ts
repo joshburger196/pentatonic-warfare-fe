@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { Genre } from 'src/app/models/genreClass';
 import { genres } from 'src/assets/static-data/genres';
 
 @Component({
@@ -14,12 +15,7 @@ export class GenreChipComponent  implements OnInit {
   textColor:string="#000000";
   chipBorder:string="";
 
-  allGenres:{"id":string,"name":string,"color":string,"isColorDark":string}[]=[];
-
-  constructor(private http:HttpClient)
-  {
-    
-  }
+  constructor(private http:HttpClient){}
 
   ngOnInit() 
   {
