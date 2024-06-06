@@ -1,5 +1,3 @@
-import { genreId } from "./genreEnum";
-import { Instrument } from "./instrument";
 import { Technique } from "./technique";
 import { Stats } from "./stats";
 

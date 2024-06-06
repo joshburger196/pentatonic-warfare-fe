@@ -37,7 +37,9 @@ export function isValidMusicianData(musician:any): musician is musicianBEType
     typeof musician.acc === "number" &&
     typeof musician.spd === "number" &&
     typeof musician.tech_1 === "string" &&
-    typeof musician.tech_2 === "string"
+    typeof musician.tech_2 === "string" &&
+    (typeof musician.tech_3 === "string" || musician.tech_3 === null)&&
+    (typeof musician.tech_4 === "string" || musician.tech_4 === null)
 }
 
 export interface techniqueBEType
@@ -64,4 +66,20 @@ export function isValidTechniqueData(technique:any): technique is techniqueBETyp
     (typeof technique.damage === "number" || technique.damage===null)  &&
     (typeof technique.effect === "string" || technique.effect===null) &&
     (typeof technique.evolution_of === "string" || technique.evolution_of===null)   
+}
+
+export interface accountBEType
+{
+    id:string,
+    name:string,
+    exp:number,
+    lvl:number
+}
+
+export function isValidAccountData(account:any): account is accountBEType
+{
+  return typeof account.id === "string" &&
+    typeof account.name === "string" &&
+    typeof account.exp === "number" &&
+    typeof account.lvl === "number"
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Account } from 'src/app/models/account';
+import { BeService } from 'src/app/services/be-service.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private beService:BeService, private localStorageService:LocalStorageService) { }
 
   ngOnInit() {
   }
@@ -35,10 +38,7 @@ export class LoginPage implements OnInit {
     //if localstorage empty or if last update older than a month,
     //then load techs, temps and learnable techs
 
-    localStorage.setItem("isLogged","true");
-
-    //navigate to battle tab
-    this.router.navigate(["/tabs/battle"]);
+    this.localStorageService.storeAllData('A00000000000');
   }
 
   onLoginFailure(){}

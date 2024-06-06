@@ -6,6 +6,7 @@ export class Technique
     id:string;
     name:string;
     genre:string;
+    instrument:string;
     description:string;
     damage:number|null;
     isSingleTarget:boolean;
@@ -15,6 +16,7 @@ export class Technique
         id:string,
         name:string,
         genre:string,
+        instrument:string,
         description:string,
         damage:number|null,
         isSingleTarget:boolean,
@@ -24,6 +26,7 @@ export class Technique
         this.id=id;
         this.name=name;
         this.genre=genre;
+        this.instrument=instrument;
         this.description=description;
         this.damage=damage;
         this.isSingleTarget=isSingleTarget;

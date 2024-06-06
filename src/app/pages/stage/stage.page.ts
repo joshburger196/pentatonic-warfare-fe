@@ -13,10 +13,10 @@ import { Stats } from 'src/app/models/stats';
 })
 export class StagePage implements OnInit {
 
-  power1:Technique=new Technique("T100","Pentatonic Solo",genreId.blues,"Basic scales!",10,true,null,null);
-  power2:Technique=new Technique("T101","The 4 Chords",genreId.pop,"CAGED chords!",2,false,"E111",null);
-  power3:Technique=new Technique("T102","Amp Feedback",genreId.metal,"About to get heavy...",2,false,"E222",null);
-  power4:Technique=new Technique("T103","Power Chords",genreId.rock,"Thicken the rythm section!",4,false,null,null)
+  power1:Technique=new Technique("T100","Pentatonic Solo",genreId.blues,Instrument.guitar,"Basic scales!",10,true,null,null);
+  power2:Technique=new Technique("T101","The 4 Chords",genreId.pop,Instrument.guitar,"CAGED chords!",2,false,"E111",null);
+  power3:Technique=new Technique("T102","Amp Feedback",genreId.metal,Instrument.guitar,"About to get heavy...",2,false,"E222",null);
+  power4:Technique=new Technique("T103","Power Chords",genreId.rock,Instrument.guitar,"Thicken the rythm section!",4,false,null,null)
   powerArray:Technique[]=[this.power1,this.power2,this.power3,this.power4];
 
   stats:Stats=new Stats(20,10,10,10,100);
