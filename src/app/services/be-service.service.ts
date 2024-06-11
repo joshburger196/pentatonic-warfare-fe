@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Musician } from '../models/musician';
-import { isValidAccountData, isValidMusicianData, isValidTechniqueData, musicianBEType } from '../models/BEtypes';
+import { isValidAccountInfoData, isValidGameAssetsData, isValidMusicianData, isValidTechniqueData, musicianBEType } from '../models/BEtypes';
 import { Stats } from '../models/stats';
 import { Technique } from '../models/technique';
 import { Account } from '../models/account';
+import { GameAssets } from '../models/gameAssets';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,22 @@ export class BeService {
 
   constructor(private http:HttpClient) { }
 
-  fetchAllTechniques():Observable<Technique[]>
+  fetchGameAssets():Observable<GameAssets>
   {
     console.log("I'm calling the BE ");
     var techList;
-    return this.http.get(`http://localhost:3000/assets/techniques`).pipe
+    return this.http.get(`http://localhost:3000/assets/`).pipe
     (
-      map(data=>{ return this.parseTechData(data) })
+      map(data=>{ return this.parseGameAssets(data) })
     );
+  }
+
+  private parseGameAssets(data:any):GameAssets
+  {
+    if(isValidGameAssetsData(data))
+      return new GameAssets(this.parseTechData(data.techniques))
+    else
+      throw new Error("Invalid Game Assets from Back-end")
   }
 
   private parseTechData(data:any):Technique[]
@@ -75,18 +84,6 @@ export class BeService {
       throw new Error("Invalid Technique Data from Back-end")
   }
 
-  getTechnique(id:string):Technique
-  {
-    //TO IMPLEMENT: validate id parameter
-
-    var techToGet=this.fetchedTechniques.find(technique => technique.id===id)
-
-    if(techToGet===undefined)
-      throw new Error(`Technique with ID ${id} not found`);
-    else
-      return techToGet;
-  }
-
   fetchAccountMusicians(accountID:string):Observable<Musician[]>
   {
     console.log("I'm calling the BE ");
@@ -102,15 +99,15 @@ export class BeService {
     if(isValidMusicianData(data))
     {
       var stats=new Stats(data.hp,data.def,data.atk,data.acc,data.spd);
-      var techniques:Technique[]=[];
+      var techniques:string[]=[];
 
       //Always only has 4 techniques, the last two are optional.
-      techniques.push(this.getTechnique(data.tech_1));
-      techniques.push(this.getTechnique(data.tech_2));
+      techniques.push(data.tech_1);
+      techniques.push(data.tech_2);
       if(data.tech_3!=null)
-        techniques.push(this.getTechnique(data.tech_3));
+        techniques.push(data.tech_3);
       if(data.tech_4!=null)
-        techniques.push(this.getTechnique(data.tech_4));
+        techniques.push(data.tech_4);
 
       var musicianObj=new Musician(
         data.id,
@@ -138,15 +135,15 @@ export class BeService {
         {
           var musData=potentialMusician;
           var stats=new Stats(musData.hp,musData.def,musData.atk,musData.acc,musData.spd);
-          var techniques:Technique[]=[];
+          var techniques:string[]=[];
 
           //Always only has 4 techniques, the last two are optional.
-          techniques.push(this.getTechnique(musData.tech_1));
-          techniques.push(this.getTechnique(musData.tech_2));
+          techniques.push(musData.tech_1);
+          techniques.push(musData.tech_2);
           if(musData.tech_3!=null)
-            techniques.push(this.getTechnique(musData.tech_3));
+            techniques.push(musData.tech_3);
           if(musData.tech_4!=null)
-            techniques.push(this.getTechnique(musData.tech_4));
+            techniques.push(musData.tech_4);
 
           var musicianObj=new Musician(
             musData.id,
@@ -182,7 +179,7 @@ export class BeService {
 
   private parseAccountData(data:any):Account
   {
-    if(isValidAccountData(data))
+    if(isValidAccountInfoData(data))
       return new Account(data.id,data.name,data.lvl,data.exp);
     throw new Error("Invalid Account Data from Back-end");
   }

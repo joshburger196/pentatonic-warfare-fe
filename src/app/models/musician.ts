@@ -9,8 +9,8 @@ export class Musician
     description:string;
     genre:string;
     instrument:string;
-    learnableTechniques:Technique[]|undefined;
-    knownTechniques:Technique[];
+    learnableTechniques:string[]|undefined;
+    knownTechniques:string[];
     exp:number;
     lvl:number;
     baseStats:Stats;
@@ -26,7 +26,7 @@ export class Musician
         description:string,
         genre:string,
         instrument:string,
-        knownTechniques:Technique[],
+        knownTechniques:string[],
         exp:number,
         lvl:number,
         baseStats:Stats,

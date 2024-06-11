@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BeService } from './be-service.service';
+import { Technique } from '../models/technique';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
+
+  allTechniques:Technique[]=[];
 
   constructor(private beService:BeService, private router:Router) { }
 
@@ -32,50 +35,45 @@ export class LocalStorageService {
     })
   }
 
-  private storeGameAssets(id:string)
+  private storeGameAssets()
   {
-    this.beService.fetchAllTechniques().subscribe(techniques=>
+    this.beService.fetchGameAssets().subscribe(assets=>
     {
-      localStorage.setItem("techniques",JSON.stringify(techniques));
+      this.allTechniques=assets.techinques;
+
+      localStorage.setItem("techniques",JSON.stringify(assets.techinques));
       localStorage.setItem("last-game-assets-query",Date.now().toString());
-      this.storeAccountData(id);
-      console.log(`Reading fetched assets:`)
+
+      console.log(`Reading fetched assets:`);
+      console.log(localStorage.getItem("techniques"));
+      console.log(localStorage.getItem("last-game-assets-query"));
     })
     
   }
 
-  private checkLocalGameAssets(id:string)
+  private areLocalGameAssetsValid():Boolean
   {
-    //check if all game assets are stored
-    if(localStorage.getItem("techniques")===null)
-    {
-      this.storeGameAssets(id);
-    }
-    else
-    {
-      //check if the last game data query was more than a week ago
-      const storedDateString=localStorage.getItem("last-game-assets-query")
-      if(storedDateString!=null)
-      {
-        const lastGameAssetsQuery:Date=new Date(storedDateString)
-        if(lastGameAssetsQuery.getTime() < Date.now()-(1000 * 60 * 60 * 24 * 7))
-          this.storeGameAssets(id)
-        else
-        {
-          this.storeAccountData(id);
-        }
-      }
-    }
+    //Are asset fields valid?
+
+    //check if the last game data query was more than a week ago
+
+    //if(lastGameAssetsQuery.getTime() < Date.now()-(1000 * 60 * 60 * 24 * 7))
+    
+    //currently I'm going to pretend the local assets are always missing/invalid
+    return false;
   }
 
-  storeAllData(id:string)
+  LoginRoutine(id:string)
   {
-    this.checkLocalGameAssets(id)
+    //currently I'm going to pretend the local assets are always missing/invalid
+    if(!this.areLocalGameAssetsValid())
+    {
+      //fetch assets from BE
+      this.storeGameAssets()
+    }
 
     //store data relative to account
-    
-
-    
+    //this.storeAccountData(id)
     
     //navigate to battle tab
     this.router.navigate(["/tabs/battle"]);
@@ -88,6 +86,15 @@ export class LocalStorageService {
     this.router.navigate(["login"]);
   }
 
+  getTechnique(id:string)
+  {
+    //to implement: [if id is valid tech ID]
+    const techToSearch=this.allTechniques.find(technique=>technique.id===id)
+    if(techToSearch!=undefined)
+      return techToSearch;
+    else
+      throw new Error(`Technique with id ${id} not found in local storage`);
+  }
 
 }
 

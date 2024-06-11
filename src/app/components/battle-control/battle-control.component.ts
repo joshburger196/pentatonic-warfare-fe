@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { menuStatus } from 'src/app/models/menuStatus';
 import { Musician } from 'src/app/models/musician';
 import { Technique } from 'src/app/models/technique';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-battle-control',
@@ -19,7 +20,7 @@ export class BattleControlComponent  implements OnInit {
   targets:Musician[]=[];
   selectedTarget:Musician|undefined;
 
-  constructor() { }
+  constructor(private localStorageService:LocalStorageService) { }
 
   ngOnInit() {}
 
@@ -33,7 +34,10 @@ export class BattleControlComponent  implements OnInit {
   {
     this.selfStatus=menuStatus.powerChoice;
     this.iSelectedMusician=index;
-    this.powers=this.ownBand[this.iSelectedMusician].knownTechniques;
+    this.ownBand[this.iSelectedMusician].knownTechniques.forEach(techID=>
+    {
+      this.powers.push(this.localStorageService.getTechnique(techID))
+    })
     console.log("Musician chosen!")
   }
 

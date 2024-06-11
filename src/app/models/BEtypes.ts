@@ -76,10 +76,21 @@ export interface accountBEType
     lvl:number
 }
 
-export function isValidAccountData(account:any): account is accountBEType
+export function isValidAccountInfoData(data:any): data is accountBEType
 {
-  return typeof account.id === "string" &&
-    typeof account.name === "string" &&
-    typeof account.exp === "number" &&
-    typeof account.lvl === "number"
+  return typeof data.account_info.id === "string" &&
+    typeof data.account_info.name === "string" &&
+    typeof data.account_info.exp === "number" &&
+    typeof data.account_info.lvl === "number"
+}
+
+export interface gameAssetsBEType
+{
+  techniques:techniqueBEType[];
+}
+
+export function isValidGameAssetsData(gameAssets:any): gameAssets is gameAssetsBEType
+{
+  //To implement
+  return true;
 }

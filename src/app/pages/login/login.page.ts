@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
     //if localstorage empty or if last update older than a month,
     //then load techs, temps and learnable techs
 
-    this.localStorageService.storeAllData('A00000000000');
+    this.localStorageService.LoginRoutine('A00000000000');
   }
 
   onLoginFailure(){}
