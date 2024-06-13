@@ -78,15 +78,68 @@ export interface accountBEType
 
 export function isValidAccountInfoData(data:any): data is accountBEType
 {
-  return typeof data.account_info.id === "string" &&
-    typeof data.account_info.name === "string" &&
-    typeof data.account_info.exp === "number" &&
-    typeof data.account_info.lvl === "number"
+  return typeof data.id === "string" &&
+    typeof data.name === "string" &&
+    typeof data.exp === "number" &&
+    typeof data.lvl === "number"
+}
+
+export interface templateBEType
+{
+  id:string;
+  name:string;
+  description:string
+  rarity:string;
+  genre:string;
+  instrument:string;
+  base_hp:number;
+  base_def:number;
+  base_atk:number;
+  base_acc:number;
+  base_spd:number;
+}
+
+export function isValidTemplateData(data:any): data is templateBEType
+{
+  return typeof data.id==="string" &&
+    typeof data.name==="string" &&
+    typeof data.description==="string" &&
+    typeof data.rarity==="string" &&
+    typeof data.genre==="string" &&
+    typeof data.instrument==="string" &&
+    typeof data.base_hp==="number" &&
+    typeof data.base_def==="number" &&
+    typeof data.base_atk==="number"&&
+    typeof data.base_acc==="number"&&
+    typeof data.base_spd==="number";
+}
+
+export interface learnableTechniqueBEType
+{
+  musician_template_id:string;
+  technique_id:string;
+}
+
+export function isValidLearnableTechData(data:any):data is learnableTechniqueBEType
+{
+  return typeof data.musician_template_id==="string" &&
+    typeof data.technique_id === "string";
+}
+
+export interface effectsBEType
+{
+  id:string;
+  name:string;
+  description:string;
+  intensity:string;
 }
 
 export interface gameAssetsBEType
 {
   techniques:techniqueBEType[];
+  musician_templates:templateBEType[];
+  learnable_techniques:learnableTechniqueBEType[];
+  effects:effectsBEType[];
 }
 
 export function isValidGameAssetsData(gameAssets:any): gameAssets is gameAssetsBEType

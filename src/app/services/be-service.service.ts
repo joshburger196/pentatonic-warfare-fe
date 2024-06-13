@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Musician } from '../models/musician';
-import { isValidAccountInfoData, isValidGameAssetsData, isValidMusicianData, isValidTechniqueData, musicianBEType } from '../models/BEtypes';
+import { isValidAccountInfoData, isValidGameAssetsData, isValidLearnableTechData, isValidMusicianData, isValidTechniqueData, isValidTemplateData, musicianBEType } from '../models/BEtypes';
 import { Stats } from '../models/stats';
 import { Technique } from '../models/technique';
 import { Account } from '../models/account';
 import { GameAssets } from '../models/gameAssets';
+import { MusicianTemplate } from '../models/musicianTemplate';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class BeService {
   fetchGameAssets():Observable<GameAssets>
   {
     console.log("I'm calling the BE ");
-    var techList;
+
     return this.http.get(`http://localhost:3000/assets/`).pipe
     (
       map(data=>{ return this.parseGameAssets(data) })
@@ -29,7 +30,9 @@ export class BeService {
   private parseGameAssets(data:any):GameAssets
   {
     if(isValidGameAssetsData(data))
-      return new GameAssets(this.parseTechData(data.techniques))
+      return new GameAssets(
+        this.parseTechData(data.techniques),
+        this.parseTemplateData(data.musician_templates,data.learnable_techniques))
     else
       throw new Error("Invalid Game Assets from Back-end")
   }
@@ -84,12 +87,76 @@ export class BeService {
       throw new Error("Invalid Technique Data from Back-end")
   }
 
-  fetchAccountMusicians(accountID:string):Observable<Musician[]>
+  private parseTemplateData(templateData:any,learnableTechData:any):MusicianTemplate[]
+  {
+    //Parse musician templates first
+    if(Array.isArray(templateData))
+    {
+      var templateArray:MusicianTemplate[]=[];
+      templateData.forEach(template=>
+      {
+        if(isValidTemplateData(template))
+        {
+          templateArray.push(new MusicianTemplate(
+            template.id,
+            template.name,
+            template.description,
+            template.rarity,
+            template.genre,
+            template.instrument,
+            new Stats(template.base_hp,template.base_def,template.base_atk,template.base_acc,template.base_spd),
+          ))
+        }
+        else
+          throw new Error("Invalid Musician Templates from Back-end")
+      })
+    }
+    else
+      throw new Error("Invalid Musician Templates from Back-end")
+
+    //Once musician templates are all parsed,
+    //the learnable techs are parsed and added to the parsed templates
+
+    if(Array.isArray(learnableTechData))
+    {
+      learnableTechData.forEach(learnableTech=>
+      {
+        if(isValidLearnableTechData(learnableTech))
+        {
+          const doesIdCorrespond= (template:MusicianTemplate) => template.id===learnableTech.musician_template_id;
+
+          //find the index of the template which has the same template_id as the learnable tech
+          let templateIndex=templateArray.findIndex(doesIdCorrespond);
+
+          if(templateIndex===-1)
+            throw new Error(`Learnable Technique ${learnableTech.musician_template_id},${learnableTech.technique_id} has no corresponding template`)
+          else
+            //add the tech_id to the array of learnable techniques of the template with the found index
+            templateArray[templateIndex].learnableTechniques.push(learnableTech.technique_id);
+        }
+        else
+          throw new Error("Invalid Learnable Techniques from Back-end")
+      });
+
+      //All is done, return template array
+      return templateArray;
+    }
+    else
+      throw new Error("Invalid Learnable Techniques from Back-end")
+  }
+
+  fetchAccountAssets(accountID:string):Observable<{"account_info":Account,"account_musicians":Musician[]}>
   {
     console.log("I'm calling the BE ");
-    return this.http.get(`http://localhost:3000/account/musicians/${accountID}`).pipe
+    return this.http.get(`http://localhost:3000/account/${accountID}`).pipe
     (
-      map(data=>this.parseMusicianData(data))
+      map(data=>
+      {
+        if("account_info" in data && "account_musicians" in data)
+          return {"account_info":this.parseAccountInfoData(data.account_info),"account_musicians":this.parseMusicianData(data.account_musicians)}
+        else
+          throw new Error("Invalid Account data from Back-end. Expected fields 'account_info' and 'account_musicians'.");
+      })
     );
   }
 
@@ -168,17 +235,9 @@ export class BeService {
     throw new Error("Invalid Musician Data from Back-end")
   }
 
-  fetchAccountDetails(accountID:string):Observable<Account>
+  private parseAccountInfoData(data:any):Account
   {
-    console.log("I'm calling the BE ");
-    return this.http.get(`http://localhost:3000/account/info/${accountID}`).pipe
-    (
-      map(data=>this.parseAccountData(data))
-    );
-  }
-
-  private parseAccountData(data:any):Account
-  {
+    console.log(JSON.stringify(data));
     if(isValidAccountInfoData(data))
       return new Account(data.id,data.name,data.lvl,data.exp);
     throw new Error("Invalid Account Data from Back-end");

@@ -17,8 +17,7 @@ export class Tab3Page implements OnInit{
 
   ngOnInit()
   {
-    console.log("I'm calling getAccountMusicians for A000...0");
-    this.beService.fetchAccountMusicians('A00000000000');
+
   }
 
   clearLocalStorage()

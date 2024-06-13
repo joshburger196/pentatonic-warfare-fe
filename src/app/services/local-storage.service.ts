@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BeService } from './be-service.service';
-import { Technique } from '../models/technique';
+import { GameAssets } from '../models/gameAssets';
+import { Account } from '../models/account';
+import { Musician } from '../models/musician';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
 
-  allTechniques:Technique[]=[];
+  runtimeAssets:GameAssets|undefined;
+  runtimeAccount:Account|undefined;
+  runtimeAccountMusicians:Musician[]|undefined;
 
   constructor(private beService:BeService, private router:Router) { }
 
-  private storeAccountData(id:string)
+  private storeAccountAssets(id:string)
   {
     //Store account details
-    this.beService.fetchAccountDetails(id).subscribe(account =>
+    this.beService.fetchAccountAssets(id).subscribe(data =>
     {
-      localStorage.setItem("isLogged","true");
-      localStorage.setItem("account-object",JSON.stringify(account));
+      this.runtimeAccount=data.account_info;
+      this.runtimeAccountMusicians=data.account_musicians;
+      
+      localStorage.setItem("is_logged","true");
+      localStorage.setItem("account_details",JSON.stringify(data.account_info));
+      localStorage.setItem("account_musicians",JSON.stringify(data.account_musicians));
 
       console.log(`Reading fetched info from localstorage:
-      ${localStorage.getItem('account-object')}`);
-    })
-
-    //Store account musicians
-    this.beService.fetchAccountMusicians(id).subscribe(musicians =>
-    {
-      localStorage.setItem("owned-musicians",JSON.stringify(musicians));
-
-      console.log(`Reading fetched info from localstorage:
-      ${localStorage.getItem('owned-musicians')}`);
-
+      Is logged: ${localStorage.getItem('is_logged')}
+      Account Details: ${localStorage.getItem('account_details')}
+      Account Musicians: ${localStorage.getItem('account_musicians')}`);
     })
   }
 
@@ -39,14 +39,14 @@ export class LocalStorageService {
   {
     this.beService.fetchGameAssets().subscribe(assets=>
     {
-      this.allTechniques=assets.techinques;
+      this.runtimeAssets=assets;
 
-      localStorage.setItem("techniques",JSON.stringify(assets.techinques));
-      localStorage.setItem("last-game-assets-query",Date.now().toString());
+      localStorage.setItem("assets",JSON.stringify(assets));
+      localStorage.setItem("last_game_assets_query",Date.now().toString());
 
-      console.log(`Reading fetched assets:`);
-      console.log(localStorage.getItem("techniques"));
-      console.log(localStorage.getItem("last-game-assets-query"));
+      /*console.log(`Reading fetched assets:`);
+      console.log(localStorage.getItem("assets"));
+      console.log(localStorage.getItem("last_game_assets_query"));*/
     })
     
   }
@@ -66,14 +66,18 @@ export class LocalStorageService {
   LoginRoutine(id:string)
   {
     //currently I'm going to pretend the local assets are always missing/invalid
-    if(!this.areLocalGameAssetsValid())
+    if(this.areLocalGameAssetsValid())
+    {
+      //this.getGameAssetsFromLocalStorage()
+    }
+    else
     {
       //fetch assets from BE
       this.storeGameAssets()
     }
 
     //store data relative to account
-    //this.storeAccountData(id)
+    this.storeAccountAssets(id)
     
     //navigate to battle tab
     this.router.navigate(["/tabs/battle"]);
@@ -89,11 +93,11 @@ export class LocalStorageService {
   getTechnique(id:string)
   {
     //to implement: [if id is valid tech ID]
-    const techToSearch=this.allTechniques.find(technique=>technique.id===id)
+    const techToSearch=this.runtimeAssets?.techinques.find(technique=>technique.id===id)
     if(techToSearch!=undefined)
       return techToSearch;
     else
-      throw new Error(`Technique with id ${id} not found in local storage`);
+      throw new Error(`Technique with id ${id} not found in runtime assets`);
   }
 
 }
