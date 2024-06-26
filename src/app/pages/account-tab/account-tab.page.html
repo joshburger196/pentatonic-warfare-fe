@@ -13,12 +13,29 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="flex-center-big">
+  <!--div class="flex-center-big">
+    <ion-text></ion-text>
+    <ion-button (click)="logOut()">Log out</ion-button>
+    <ion-button (click)="clearLocalStorage()">Clear local storage</ion-button>
+  </div-->
+
+  <div class="half top">
+    <ion-avatar></ion-avatar>
+    <ion-text>Name</ion-text>
+  </div>
+  <div class="half bottom">
+    <ion-card>View Musicians</ion-card>
+    <ion-card>View Bands</ion-card>
     <ion-button (click)="logOut()">Log out</ion-button>
     <ion-button (click)="clearLocalStorage()">Clear local storage</ion-button>
   </div>
 
   <ion-card>
-    {{musicianList | json}}
+    <ion-list>
+      <ion-item *ngFor="let musician of musicianList">
+        {{musician.name}}
+        <app-genre-chip genreId={{musician.genre}}></app-genre-chip>
+      </ion-item>
+    </ion-list>
   </ion-card>
 </ion-content>

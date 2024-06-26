@@ -23,17 +23,17 @@ export class StagePage implements OnInit {
 
   stats:Stats=new Stats(20,10,10,10,100);
 
-  ally1:Musician=new Musician("M0000000","Ally1","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  ally2:Musician=new Musician("M0000001","Ally2","","",genreId.metal,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  ally3:Musician=new Musician("M0000002","Ally3","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  ally4:Musician=new Musician("M0000003","Ally4","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
+  ally1:Musician=new Musician("M0000000","Ally1","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  ally2:Musician=new Musician("M0000001","Ally2","","",genreId.metal,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  ally3:Musician=new Musician("M0000002","Ally3","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  ally4:Musician=new Musician("M0000003","Ally4","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
   
   ownBand:Musician[]=[this.ally1,this.ally2,this.ally3,this.ally4]
 
-  opponent1:Musician=new Musician("M0000000","opp1","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  opponent2:Musician=new Musician("M0000001","opp2","","",genreId.metal,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  opponent3:Musician=new Musician("M0000002","opp3","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
-  opponent4:Musician=new Musician("M0000003","opp4","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats,this.stats)
+  opponent1:Musician=new Musician("M0000000","opp1","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  opponent2:Musician=new Musician("M0000001","opp2","","",genreId.metal,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  opponent3:Musician=new Musician("M0000002","opp3","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
+  opponent4:Musician=new Musician("M0000003","opp4","","",genreId.rock,Instrument.guitar,this.powerIdArray,0,1,this.stats)
 
   opponentBand:Musician[]=[this.opponent1,this.opponent2,this.opponent3,this.opponent4]
 

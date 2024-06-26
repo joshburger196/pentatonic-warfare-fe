@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BeService } from 'src/app/services/be-service.service';
+import { Account } from 'src/app/models/account';
+import { Musician } from 'src/app/models/musician';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { LogoutService } from 'src/app/services/logout.service';
 
 @Component({
   selector: 'app-profile-tab',
   templateUrl: 'account-tab.page.html',
   styleUrls: ['account-tab.page.scss']
 })
-export class Tab3Page implements OnInit{
+export
+ class Tab3Page implements OnInit{
 
-  musicianList:any;
+  musicianList:Musician[]|undefined;
+  accountDetails:Account|undefined;
 
-  constructor(private beService:BeService,private router:Router,private logoutService:LogoutService, private localStorageService:LocalStorageService) {}
+  constructor(private localStorageService:LocalStorageService) {}
 
   ngOnInit()
   {
-
+    this.musicianList=LocalStorageService.runtimeAccountMusicians;
+    this.accountDetails=LocalStorageService.runtimeAccount;
+    console.log(JSON.stringify(LocalStorageService.runtimeAccountMusicians));
+    console.log(JSON.stringify(LocalStorageService.runtimeAccount));
   }
 
   clearLocalStorage()
@@ -27,6 +31,6 @@ export class Tab3Page implements OnInit{
 
   logOut()
   {
-    this.logoutService.logOut();
+    this.localStorageService.logOut();
   }
 }

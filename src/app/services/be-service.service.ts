@@ -15,11 +15,11 @@ import { MusicianTemplate } from '../models/musicianTemplate';
 export class BeService {
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient){}
 
   fetchGameAssets():Observable<GameAssets>
   {
-    console.log("I'm calling the BE ");
+    console.log("I'm calling the BE for Game Assets");
 
     return this.http.get(`http://localhost:3000/assets/`).pipe
     (
@@ -147,7 +147,7 @@ export class BeService {
 
   fetchAccountAssets(accountID:string):Observable<{"account_info":Account,"account_musicians":Musician[]}>
   {
-    console.log("I'm calling the BE ");
+    console.log("I'm calling the BE for Account Data");
     return this.http.get(`http://localhost:3000/account/${accountID}`).pipe
     (
       map(data=>
@@ -186,7 +186,6 @@ export class BeService {
         techniques,
         data.exp,
         data.lvl,
-        stats,
         stats
       );
       return [musicianObj]; //RETURN SINGLE MUSICIAN
@@ -222,7 +221,6 @@ export class BeService {
             techniques,
             musData.exp,
             musData.lvl,
-            stats,
             stats
           );
           musicianArray.push(musicianObj);
