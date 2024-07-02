@@ -36,11 +36,12 @@
       </ion-grid>
 
       <app-custom-card *ngFor="let musician of musicianList"
-      [title]="musician.name+' Lvl.'+musician.lvl"
+      [title]="musician.name"
       [genre]="musician.genre"
       imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg"
+      [borderColor]="getRarity(musician.rarity).color"
       width="18rem">
-         {{musician.instrument}}
+         {{getMusicianInstrument(musician.instrument)}} Lvl.{{musician.lvl}}
       </app-custom-card>
 
       <ion-list>

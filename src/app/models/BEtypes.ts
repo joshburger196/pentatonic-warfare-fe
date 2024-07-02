@@ -4,6 +4,7 @@ export interface musicianBEType
     template:string,
     genre:string,
     instrument:string,
+    rarity:string,
     found_by:string,
     name:string,
     description:string,
@@ -26,6 +27,7 @@ export function isValidMusicianData(musician:any): musician is musicianBEType
     typeof musician.template === "string" &&
     typeof musician.genre === "string" &&
     typeof musician.instrument === "string" &&
+    typeof musician.rarity === "string" &&
     typeof musician.found_by === "string" &&
     typeof musician.name === "string" &&
     typeof musician.description === "string" &&

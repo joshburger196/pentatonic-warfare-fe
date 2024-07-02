@@ -17,7 +17,7 @@ export class CustomCardComponent  implements OnInit {
   @Input() imgUrl:string=""; //Determines optional img in the left column of the card
   @Input() clickable:boolean=false; //Activates click animations
   @Input() disabled:boolean=false;  //Styled to look uninteractable (grey or transparent)
-  @Input() borderColor:string=""; //Sets border colour in css, used to express rarity
+  @Input() borderColor:string="black"; //Sets border colour in css, used to express rarity
   @Input() width:string="16rem"; //Sets width. Can be useful to suit different pages and layouts
   @Input("max-width") maxWidth:string=""; //Sets max width. Can be useful to suit different pages and layouts
 

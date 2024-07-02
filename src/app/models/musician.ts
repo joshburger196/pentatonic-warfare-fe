@@ -4,11 +4,12 @@ import { Stats } from "./stats";
 export class Musician
 {
     id:string;
-    name:string;
     template:string;
-    description:string;
     genre:string;
     instrument:string;
+    rarity:string;
+    name:string;
+    description:string;
     learnableTechniques:string[]|undefined;
     knownTechniques:string[];
     exp:number;
@@ -21,11 +22,12 @@ export class Musician
     constructor
     (
         id:string,
-        name:string,
-        template:string,
-        description:string,
         genre:string,
         instrument:string,
+        rarity:string,
+        template:string,
+        name:string,
+        description:string,
         knownTechniques:string[],
         exp:number,
         lvl:number,
@@ -33,11 +35,12 @@ export class Musician
     )
     {
         this.id=id;
-        this.name=name;
-        this.template=template;
-        this.description=description;
         this.genre=genre;
         this.instrument=instrument;
+        this.rarity=rarity;
+        this.template=template;
+        this.name=name;
+        this.description=description;
         this.knownTechniques=knownTechniques;
         this.exp=exp;
         this.lvl=lvl;
@@ -60,11 +63,12 @@ export class Musician
         else
         //if it's not an array, check if it has the musician fields
             return typeof(obj.id)==="string" &&
-                typeof(obj.name)==="string" &&
-                typeof(obj.template)==="string" &&
-                typeof(obj.description)==="string" &&
                 typeof(obj.genre)==="string" &&
                 typeof(obj.instrument)==="string" &&
+                typeof(obj.rarity)==="string" &&
+                typeof(obj.template)==="string" &&
+                typeof(obj.name)==="string" &&
+                typeof(obj.description)==="string" &&
                 typeof(obj.exp)==="number" &&
                 typeof(obj.lvl)==="number" &&
                 typeof(obj.baseStats.hp)==="number" &&

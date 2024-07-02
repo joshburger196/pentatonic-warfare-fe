@@ -178,11 +178,12 @@ export class BeService {
 
       var musicianObj=new Musician(
         data.id,
-        data.name,
-        data.template,
-        data.description,
         data.genre,
         data.instrument,
+        data.rarity,
+        data.template,
+        data.name,
+        data.description,
         techniques,
         data.exp,
         data.lvl,
@@ -213,11 +214,12 @@ export class BeService {
 
           var musicianObj=new Musician(
             musData.id,
-            musData.name,
-            musData.template,
-            musData.description,
             musData.genre,
             musData.instrument,
+            musData.rarity,
+            musData.template,
+            musData.name,
+            musData.description,
             techniques,
             musData.exp,
             musData.lvl,

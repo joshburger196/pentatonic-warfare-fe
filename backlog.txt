@@ -24,7 +24,7 @@ Optimisations and Order
 2. Remove redundancy from be-service
     Most functions here are written to parse 1 object or an array of objects
     and the code for these 2 options is written twice, and this can be fixed
-    with recursion
+    with recursion (take isValidMusicianObj as an exampl)
 
 3. Optimise error catching in be-service and ls-service
     Read functions, check types, standardise error msgs
