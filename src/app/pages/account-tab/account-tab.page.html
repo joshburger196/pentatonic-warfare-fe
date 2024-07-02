@@ -18,24 +18,41 @@
     <ion-button (click)="logOut()">Log out</ion-button>
     <ion-button (click)="clearLocalStorage()">Clear local storage</ion-button>
   </div-->
+  <div class="page-container flex-center">
+    <div class="main-strip flex-center">
+      <app-custom-card
+      [title]="accountDetails?.name+' Lvl.'+accountDetails?.lvl"
+      imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg">
+        <ion-text>
+          {{"Exp: "+accountDetails?.exp+"/1000"}}
+        </ion-text>
+      </app-custom-card>
 
-  <div class="half top">
-    <ion-avatar></ion-avatar>
-    <ion-text>Name</ion-text>
-  </div>
-  <div class="half bottom">
-    <ion-card>View Musicians</ion-card>
-    <ion-card>View Bands</ion-card>
-    <ion-button (click)="logOut()">Log out</ion-button>
-    <ion-button (click)="clearLocalStorage()">Clear local storage</ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col><ion-card>View Musicians</ion-card></ion-col>
+          <ion-col><ion-card>View Bands</ion-card></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <app-custom-card *ngFor="let musician of musicianList"
+      [title]="musician.name+' Lvl.'+musician.lvl"
+      [genre]="musician.genre"
+      imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg"
+      width="18rem">
+         {{musician.instrument}}
+      </app-custom-card>
+
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider><ion-label>Your Data</ion-label></ion-item-divider>
+          <ion-item (click)="logOut()">Log out</ion-item>
+          <ion-item (click)="clearLocalStorage()">Clear local storage</ion-item>
+          <ion-item>Edit Account</ion-item>
+          <ion-item><ion-label color="danger">Delete Account</ion-label></ion-item>
+        </ion-item-group>
+      </ion-list>
+    </div>
   </div>
 
-  <ion-card>
-    <ion-list>
-      <ion-item *ngFor="let musician of musicianList">
-        {{musician.name}}
-        <app-genre-chip genreId={{musician.genre}}></app-genre-chip>
-      </ion-item>
-    </ion-list>
-  </ion-card>
 </ion-content>

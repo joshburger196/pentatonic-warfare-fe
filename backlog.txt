@@ -1,0 +1,30 @@
+Pentatonic Warfare FE BACKLOG
+
+Main Implementation
+1.Implement Musician List
+    Used to view managed musicians and to select band members.
+    List of musicians displaying basic data like instrument, rarity, genre and level
+    Optionally clickable, click function depends on parent component
+2.Start Battle with musician selection
+3.Add Rarity to Musician objects
+
+Optimisations and Order
+1. create a component to substitute ion-cards because these are used to display info for:
+    techniques, musicians in battle, musicians in account tab and account details.
+    It should have many inputs:
+        a. border colour (string hex), 
+        b. clickable (true/false) to give it click animations and events
+        c. Title (Musician.lvl, Account name, Technique name)
+        d. Content (This bottom row should be a ng-content type of thing to write icons and other fancy stuff)
+        e. Img Url
+        f. Genre
+        (added index and id inputs to return discernable event values)
+
+
+2. Remove redundancy from be-service
+    Most functions here are written to parse 1 object or an array of objects
+    and the code for these 2 options is written twice, and this can be fixed
+    with recursion
+
+3. Optimise error catching in be-service and ls-service
+    Read functions, check types, standardise error msgs

@@ -7,6 +7,7 @@ import { ExploreContainerComponentModule } from '../../components/explore-contai
 
 import { Tab3PageRoutingModule } from './account-tab-routing.module';
 import { GenreChipModule } from 'src/app/components/genre-chip/genre-chip.module';
+import { CustomCardModule } from 'src/app/components/custom-card/custom-card.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { GenreChipModule } from 'src/app/components/genre-chip/genre-chip.module
     FormsModule,
     ExploreContainerComponentModule,
     Tab3PageRoutingModule,
-    GenreChipModule
+    GenreChipModule,
+    CustomCardModule
   ],
   declarations: [Tab3Page]
 })

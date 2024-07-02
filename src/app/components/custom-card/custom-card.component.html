@@ -1,0 +1,18 @@
+<ion-card
+class="flex-left main-card"
+[style.--border-color]="borderColor"
+[style.--width]="width"
+[style.--max-width]="maxWidth"
+(click)="clickEvent()">
+  <ion-avatar *ngIf="imgUrl!=''">
+    <img alt="Silhouette of a person's head" [src]="imgUrl" />
+  </ion-avatar>
+
+  <div class="data-col">
+    <div class="title-row flex-left">
+      <ion-text color="dark" class="title">{{title}}</ion-text>
+      <app-genre-chip *ngIf="genre!=''" [genreId]="genre"></app-genre-chip>
+    </div>
+    <ng-content class="details-row"></ng-content>
+  </div>
+</ion-card>
