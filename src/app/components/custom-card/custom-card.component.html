@@ -1,6 +1,7 @@
 <ion-card
-class="flex-left main-card"
+[class]="'flex-left main-card'+extraClasses"
 [style.--border-color]="borderColor"
+[style.--min-width]="minWidth"
 [style.--width]="width"
 [style.--max-width]="maxWidth"
 (click)="clickEvent()">

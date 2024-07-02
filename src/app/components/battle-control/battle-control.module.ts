@@ -7,6 +7,7 @@ import { BattleControlComponent } from './battle-control.component';
 import { CaptionComponent } from './caption/caption.component';
 import { StatBlockModule } from '../stat-block/stat-block.module';
 import { PowerBlockModule } from '../power-block/power-block.module';
+import { CustomCardModule } from '../custom-card/custom-card.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { PowerBlockModule } from '../power-block/power-block.module';
     FormsModule,
     IonicModule,
     StatBlockModule,
-    PowerBlockModule
+    PowerBlockModule,
+    CustomCardModule
   ],
   declarations: [BattleControlComponent,CaptionComponent],
   exports:[BattleControlComponent]

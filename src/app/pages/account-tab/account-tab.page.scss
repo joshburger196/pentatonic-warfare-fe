@@ -1,11 +1,12 @@
 .page-container
 {
     width:100%;
-
 }
 .main-strip
 {
-    max-width:48rem;
+    min-width:18rem;
+    width:100%;
+    max-width:60rem;
     flex-wrap:wrap;
     flex-direction: column;
 }
@@ -23,6 +24,11 @@
     gap:0.5rem;
     font-size: 1rem;
     font-weight: bold;
+}
+
+.roster-grid
+{
+    flex-wrap: wrap;
 }
 
 ion-grid, ion-list

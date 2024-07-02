@@ -13,7 +13,7 @@ import { getRarity } from 'src/assets/static-data/rarities';
 export
  class Tab3Page implements OnInit{
 
-  musicianList:Musician[]|undefined;
+  musicianList:Musician[]=[];
   accountDetails:Account|undefined;
 
   constructor(private localStorageService:LocalStorageService) {}

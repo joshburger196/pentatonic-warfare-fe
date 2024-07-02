@@ -3,6 +3,7 @@ import { menuStatus } from 'src/app/models/menuStatus';
 import { Musician } from 'src/app/models/musician';
 import { Technique } from 'src/app/models/technique';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { getRarity } from 'src/assets/static-data/rarities';
 
 @Component({
   selector: 'app-battle-control',
@@ -23,6 +24,11 @@ export class BattleControlComponent  implements OnInit {
   constructor(private localStorageService:LocalStorageService) { }
 
   ngOnInit() {}
+
+  getRarity(id:string)
+  {
+    return getRarity(id);
+  }
 
   startTurn()
   {

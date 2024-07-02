@@ -22,7 +22,8 @@
     <div class="main-strip flex-center">
       <app-custom-card
       [title]="accountDetails?.name+' Lvl.'+accountDetails?.lvl"
-      imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg">
+      imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg"
+      width="18rem">
         <ion-text>
           {{"Exp: "+accountDetails?.exp+"/1000"}}
         </ion-text>
@@ -35,14 +36,18 @@
         </ion-row>
       </ion-grid>
 
-      <app-custom-card *ngFor="let musician of musicianList"
-      [title]="musician.name"
-      [genre]="musician.genre"
-      imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg"
-      [borderColor]="getRarity(musician.rarity).color"
-      width="18rem">
-         {{getMusicianInstrument(musician.instrument)}} Lvl.{{musician.lvl}}
-      </app-custom-card>
+      <div class="flex-center roster-grid">
+        <app-custom-card *ngFor="let musician of musicianList"
+        [title]="musician.name"
+        [genre]="musician.genre"
+        imgUrl="https://ionicframework.com/docs/img/demos/avatar.svg"
+        [borderColor]="getRarity(musician.rarity).color"
+        min-width=""
+        width="18rem"
+        max-width="">
+          {{getMusicianInstrument(musician.instrument)}} Lvl.{{musician.lvl}}
+        </app-custom-card>
+      </div>
 
       <ion-list>
         <ion-item-group>

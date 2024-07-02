@@ -2,13 +2,12 @@
 {
     gap: 0.5rem;
     padding: 0.5rem;
+    min-width:var(--min-width);
     width:var(--width);
     max-width:var(--max-width);
     margin:1rem;
 
     border: 2px solid var(--border-color);
-    /*margin:0.25rem;
-    padding:0.25rem;*/
 }
 
 .title-row
@@ -25,4 +24,15 @@
 app-genre-chip
 {
     font-size:0.6rem;
+}
+
+.disabled
+{
+    opacity: 0.5;
+}
+
+.compact
+{
+    margin: 0.25rem !important;
+    padding: 0.25rem !important;
 }

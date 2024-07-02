@@ -5,6 +5,7 @@ import { Instrument } from 'src/app/models/instrument';
 import { Musician } from 'src/app/models/musician';
 import { Technique } from 'src/app/models/technique';
 import { Stats } from 'src/app/models/stats';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-stage',
@@ -12,6 +13,8 @@ import { Stats } from 'src/app/models/stats';
   styleUrls: ['./stage.page.scss'],
 })
 export class StagePage implements OnInit {
+
+  musicianList:Musician[]=[];
 
   power1:Technique=new Technique("T100","Pentatonic Solo",genreId.blues,Instrument.guitar,"Basic scales!",10,true,null,null);
   power2:Technique=new Technique("T101","The 4 Chords",genreId.pop,Instrument.guitar,"CAGED chords!",2,false,"E111",null);
@@ -43,7 +46,13 @@ export class StagePage implements OnInit {
   {
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
+    this.musicianList=LocalStorageService.runtimeAccountMusicians;
+    this.ownBand[0]=this.musicianList[0];
+    this.ownBand[1]=this.musicianList[1];
+    this.ownBand[2]=this.musicianList[2];
+    this.ownBand[3]=this.musicianList[3];
   }
 
 }

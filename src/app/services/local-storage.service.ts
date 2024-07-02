@@ -13,7 +13,7 @@ export class LocalStorageService {
 
   static runtimeAssets:GameAssets|undefined;
   static runtimeAccount:Account|undefined;
-  static runtimeAccountMusicians:Musician[]|undefined;
+  static runtimeAccountMusicians:Musician[]=[];
 
   constructor(private beService:BeService, private router:Router){}
 
@@ -189,7 +189,7 @@ export class LocalStorageService {
   {
     localStorage.setItem("is_logged","false");
     LocalStorageService.runtimeAccount=undefined;
-    LocalStorageService.runtimeAccountMusicians=undefined;
+    LocalStorageService.runtimeAccountMusicians=[];
     localStorage.removeItem("account_details");
     localStorage.removeItem("account_musicians");
     this.router.navigate(["login"]);
