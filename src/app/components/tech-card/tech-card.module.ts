@@ -4,16 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { GenreChipModule } from '../genre-chip/genre-chip.module';
-import { PowerBlockComponent } from './power-block.component';
+import { TechCardComponent } from './tech-card.component';
+import { CustomCardModule } from '../custom-card/custom-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GenreChipModule
+    GenreChipModule,
+    CustomCardModule
   ],
-  declarations: [PowerBlockComponent],
-  exports:[PowerBlockComponent]
+  declarations: [TechCardComponent],
+  exports:[TechCardComponent]
 })
-export class PowerBlockModule {}
+export class TechCardModule {}

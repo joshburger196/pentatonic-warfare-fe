@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Musician } from 'src/app/models/musician';
+import { getRarity } from 'src/assets/static-data/rarities';
 
 @Component({
-  selector: 'app-stat-block',
-  templateUrl: './stat-block.component.html',
-  styleUrls: ['./stat-block.component.scss'],
+  selector: 'app-stat-card',
+  templateUrl: './stat-card.component.html',
+  styleUrls: ['./stat-card.component.scss'],
 })
 export class StatBlockComponent  implements OnInit {
   @Input() musician:Musician|undefined;
   @Input() clickable:boolean=false;
   @Input() disabled:boolean=false;
-  @Output("clickEvent") clickEventEmitter=new EventEmitter<Musician>();
+  @Output("click") clickEventEmitter=new EventEmitter<Musician>();
 
   cardClass:string="";
 
@@ -25,9 +26,14 @@ export class StatBlockComponent  implements OnInit {
       this.cardClass="disabled";
   }
 
-  onClick()
+  getRarity(id:string)
+  {
+    return getRarity(id)
+  }
+
+  emitMusician()
   {
     if(!this.disabled && this.clickable)
-      this.clickEventEmitter.emit();
+      this.clickEventEmitter.emit(this.musician);
   }
 }

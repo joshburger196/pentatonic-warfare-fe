@@ -1,8 +1,0 @@
-<ion-card [class]="cardClass" (click)="onClick()">
-  <div class="name-row flex-left">
-    <ion-text color="dark" class="name">{{musician?.name}}</ion-text>
-    <app-genre-chip [genreId]="musician?.genre"></app-genre-chip>
-  </div>
-
-  {{musician?.battleStats?.hp}}/{{musician?.baseStats?.hp}}
-</ion-card>

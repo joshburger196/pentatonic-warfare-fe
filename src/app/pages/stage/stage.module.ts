@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { StagePageRoutingModule } from './stage-routing.module';
 
 import { StagePage } from './stage.page';
-import { StatBlockModule } from 'src/app/components/stat-block/stat-block.module';
+import { StatCardModule } from 'src/app/components/stat-card/stat-card.module';
 import { StageScreenModule } from 'src/app/components/stage-screen/stage-screen.module';
 import { BattleControlModule } from 'src/app/components/battle-control/battle-control.module';
 import { BandStatsViewModule } from 'src/app/components/band-stats-view/band-stats-view.module';
@@ -18,7 +18,7 @@ import { BandStatsViewModule } from 'src/app/components/band-stats-view/band-sta
     FormsModule,
     IonicModule,
     StagePageRoutingModule,
-    StatBlockModule,
+    StatCardModule,
     StageScreenModule,
     BattleControlModule,
     BandStatsViewModule

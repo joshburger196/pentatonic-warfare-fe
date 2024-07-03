@@ -5,17 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BattleControlComponent } from './battle-control.component';
 import { CaptionComponent } from './caption/caption.component';
-import { StatBlockModule } from '../stat-block/stat-block.module';
-import { PowerBlockModule } from '../power-block/power-block.module';
+import { StatCardModule } from '../stat-card/stat-card.module';
 import { CustomCardModule } from '../custom-card/custom-card.module';
+import { TechCardModule } from '../tech-card/tech-card.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StatBlockModule,
-    PowerBlockModule,
+    StatCardModule,
+    TechCardModule,
     CustomCardModule
   ],
   declarations: [BattleControlComponent,CaptionComponent],

@@ -1,0 +1,26 @@
+<!--ion-card [class]="cardClass" (click)="onClick()">
+  <div class="name-row flex-left">
+    <ion-text color="dark" class="name">{{musician?.name}}</ion-text>
+    <app-genre-chip [genreId]="musician?.genre"></app-genre-chip>
+  </div>
+
+  {{musician?.battleStats?.hp}}/{{musician?.baseStats?.hp}}
+</ion-card-->
+
+<app-custom-card
+*ngIf="musician!=null"
+
+class="option-card"
+[title]="musician.name"
+[genre]="musician.genre"
+
+[clickable]="true"
+[compact]="true"
+[disabled]="musician.hasAlreadyTakenTurn"
+
+[borderColor]="getRarity(musician.rarity).color"
+width="12rem"
+
+(click)="emitMusician()">
+Lvl.{{musician.lvl}} Hp:{{musician.battleStats.hp}}/{{musician.baseStats.hp}}
+</app-custom-card>

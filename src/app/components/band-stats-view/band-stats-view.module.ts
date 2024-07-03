@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { BandStatsViewComponent } from './band-stats-view.component';
-import { StatBlockModule } from '../stat-block/stat-block.module';
+import { StatCardModule } from '../stat-card/stat-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StatBlockModule
+    StatCardModule
   ],
   declarations: [BandStatsViewComponent],
   exports:[BandStatsViewComponent]

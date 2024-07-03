@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CustomCardComponent } from './custom-card.component';
+import { StatBlockComponent } from './stat-card.component';
 
-describe('CustomCardComponent', () => {
-  let component: CustomCardComponent;
-  let fixture: ComponentFixture<CustomCardComponent>;
+describe('StatBlockComponent', () => {
+  let component: StatBlockComponent;
+  let fixture: ComponentFixture<StatBlockComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomCardComponent ],
+      declarations: [ StatBlockComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CustomCardComponent);
+    fixture = TestBed.createComponent(StatBlockComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

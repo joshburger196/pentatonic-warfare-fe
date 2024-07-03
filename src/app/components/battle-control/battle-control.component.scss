@@ -9,6 +9,13 @@
     font-size: 1.25rem;
 }
 
+.button-container
+{
+    flex-wrap:wrap;
+}
+
+
+
 ion-grid
 {
     height:8rem;
@@ -27,9 +34,4 @@ ion-col
 {
     padding: 0;
     margin: 0.1rem 0rem 0.1rem 0rem;
-}
-
-.option-card
-{
-    height:90%
 }

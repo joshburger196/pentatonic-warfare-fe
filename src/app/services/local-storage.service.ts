@@ -101,26 +101,12 @@ export class LocalStorageService {
     return true;
   }
 
-  private loadAssetsFromLocalStorage()
+  private loadPotentiallyStoredAssets()
   {
-    //assuming the LocalStorage has valid assets
-    LocalStorageService.runtimeAssets=JSON.parse(localStorage.getItem("assets")||"");
-  }
-
-  private loadAccountFromLocalStorage()
-  {
-    //assuming the LocalStorage has valid assets
-    LocalStorageService.runtimeAccount=JSON.parse(localStorage.getItem("account_details")||"");
-    LocalStorageService.runtimeAccountMusicians=JSON.parse(localStorage.getItem("account_musicians")||"");
-  }
-
-  LoginRoutine(id:string)
-  {
-    //currently I'm going to pretend the local assets are always missing/invalid
     if(this.areLocalGameAssetsValid())
     {
       console.log("Loading assets from LocalStorage")
-      this.loadAssetsFromLocalStorage()
+      LocalStorageService.runtimeAssets=JSON.parse(localStorage.getItem("assets")||"");
     }
     else
     {
@@ -128,26 +114,35 @@ export class LocalStorageService {
       //fetch assets from BE
       this.storeGameAssets()
     }
-
-    //store data relative to account
-    this.storeAccountAssets(id)
-    
-    
   }
 
-  loadPotentiallyStoredAccount()
+  private loadPotentiallyStoredAccount()
   {
     console.log("Checking if an account is stored")
     if(LocalStorageService.isLogged())
     {
-      console.log(`Account is stored and will now be loaded
-        ${localStorage.getItem("account_details")}
-        ${localStorage.getItem("account_musicians")}`)
+      console.log(`Account is stored and will now be loaded`);
+        /*${localStorage.getItem("account_details")}
+        ${localStorage.getItem("account_musicians")}`)*/
 
       LocalStorageService.runtimeAccount=JSON.parse(localStorage.getItem("account_details")||"");
       LocalStorageService.runtimeAccountMusicians=JSON.parse(localStorage.getItem("account_musicians")||"");
     }
     else console.log("account is not stored. I'll do nothing.")
+  }
+
+  LoginRoutine(id:string)
+  {
+    //this.loadPotentiallyStoredAssets()
+
+    //store data relative to account
+    this.storeAccountAssets(id)
+  }
+
+  StartupRoutine()
+  {
+    this.loadPotentiallyStoredAccount()
+    this.loadPotentiallyStoredAssets()
   }
 
   static isLogged():boolean
@@ -162,9 +157,9 @@ export class LocalStorageService {
     {
       var account=JSON.parse(localStorage.getItem("account_details")||"");
       var accountMusicians=JSON.parse(localStorage.getItem("account_musicians")||"");
-      console.log(`Data read from Local Storage:
+      /*console.log(`Data read from Local Storage:
         Account: ${JSON.stringify(account)}
-        Musicians: ${JSON.stringify(accountMusicians)}`)
+        Musicians: ${JSON.stringify(accountMusicians)}`)*/
     }
     catch
     {
@@ -197,12 +192,13 @@ export class LocalStorageService {
 
   getTechnique(id:string)
   {
+    //console.log(`Debugging Runtime Assets:${JSON.stringify(LocalStorageService.runtimeAssets)}`)
     //to implement: [if id is valid tech ID]
-    const techToSearch=LocalStorageService.runtimeAssets?.techinques.find(technique=>technique.id===id)
-    if(techToSearch!=undefined)
-      return techToSearch;
+    const techToGet=LocalStorageService.runtimeAssets?.techinques.find(technique=>technique.id===id)
+    if(techToGet!=undefined)
+      return techToGet;
     else
-      throw new Error(`Technique with id ${id} not found in runtime assets`);
+      throw new Error(`Technique with id ${id} not found in runtime assets.`);
   }
 
 }

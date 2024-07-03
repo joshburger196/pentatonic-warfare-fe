@@ -16,8 +16,8 @@ export class BattleControlComponent  implements OnInit {
 
   selfStatus:menuStatus=menuStatus.turnStart;
   iSelectedMusician:number=-1;
-  powers:Technique[]=[];
-  selectedPower:Technique|undefined;
+  techniques:Technique[]=[];
+  selectedTech:Technique|undefined;
   targets:Musician[]=[];
   selectedTarget:Musician|undefined;
 
@@ -33,45 +33,55 @@ export class BattleControlComponent  implements OnInit {
   startTurn()
   {
     this.selfStatus=menuStatus.musicianChoice;
+
+    //reset all values, just in case
+    this.iSelectedMusician=-1;
+    this.techniques=[];
+    this.selectedTech=undefined;
+    this.targets=[];
+    this.selectedTarget=undefined;
+    
     console.log("Turn started!")
   }
 
-  selectMusician(index:number)
+  selectMusician(musician:Musician)
   {
-    this.selfStatus=menuStatus.powerChoice;
-    this.iSelectedMusician=index;
-    this.ownBand[this.iSelectedMusician].knownTechniques.forEach(techID=>
+    this.selfStatus=menuStatus.techChoice;
+    this.iSelectedMusician=this.indexOfMusician(this.ownBand,musician.id);
+    musician.knownTechniques.forEach(techID=>
     {
-      this.powers.push(this.localStorageService.getTechnique(techID))
+      this.techniques.push(this.localStorageService.getTechnique(techID))
     })
     console.log("Musician chosen!")
   }
 
-  selectPower(index:number)
+  selectTechnique(technique:Technique)
   {
-    this.selectedPower=this.powers[index];
-    if(this.selectedPower.isSingleTarget)
+    this.selectedTech=technique;
+    if(this.selectedTech.isSingleTarget)
     {
       this.targets=this.opponentBand;
       this.selfStatus=menuStatus.targetChoice;
     }
     else
-      this.excecutePower();
+      this.excecuteTech();
   }
 
-  selectTarget(index:number)
+  selectTarget(target:Musician)
   {
-    this.selectedTarget=this.targets[index];
-    this.excecutePower();
+    this.selectedTarget=target;
+    this.excecuteTech();
   }
 
-  excecutePower()
+  excecuteTech()
   {
     this.selfStatus=menuStatus.musicianAction;
-    //sendMoveToBackend to calculate new battleState
+
+    //Calculate new battleState with BattleService
+
     this.iSelectedMusician;
-    this.selectedPower;
-    this.selectedTarget;
+    this.selectedTech?.id;
+    this.selectedTarget?.id;
 
     this.ownBand[this.iSelectedMusician].hasAlreadyTakenTurn=true;
 
@@ -105,17 +115,25 @@ export class BattleControlComponent  implements OnInit {
 
   goBack()
   {
-    if(this.selfStatus==menuStatus.powerChoice)
+    if(this.selfStatus==menuStatus.techChoice)
     {
       this.iSelectedMusician=-1;
-      this.powers=[];
+      this.techniques=[];
       this.selfStatus=menuStatus.musicianChoice;
     }
     else if(this.selfStatus==menuStatus.targetChoice)
     {
-      this.selectedPower=undefined;
+      this.selectedTech=undefined;
       this.targets=[];
-      this.selfStatus=menuStatus.powerChoice;
+      this.selfStatus=menuStatus.techChoice;
     }
+  }
+
+  indexOfMusician(band:Musician[], id:string):number
+  {
+    for(let i=0;i<band.length;i++)
+      if(band[i].id===id)
+        return i;
+    throw new Error(`Musician with id ${id} not found. Band: ${JSON.stringify(band)}`);
   }
 }

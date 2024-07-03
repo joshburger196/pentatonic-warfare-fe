@@ -7,112 +7,35 @@
     <div class="flex-center hint">
       <ion-text>Choose a musician!</ion-text>
     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <app-custom-card
-          class="option-card"
-          [title]="ownBand[0].name"
-          [genre]="ownBand[0].genre"
-          
-          [clickable]="true"
-          [compact]="true"
-          [disabled]="ownBand[0].hasAlreadyTakenTurn"
+    <div class="flex-center button-container">
+      <app-stat-card
+        *ngFor="let musician of ownBand"
+        [musician]="musician"
+        [clickable]="true"
+        [disabled]="musician.hasAlreadyTakenTurn"
+        (click)="selectMusician(musician)">
+      </app-stat-card>
 
-          [borderColor]="getRarity(ownBand[0].rarity).color"
-
-          (click)="selectMusician(0)">
-          Lvl.{{ownBand[0].lvl}} Hp:{{ownBand[0].battleStats.hp}}/{{ownBand[0].baseStats.hp}}
-          </app-custom-card>
-        </ion-col>
-          
-        <ion-col>
-          <app-custom-card
-          class="option-card"
-          [title]="ownBand[1].name+' Lvl.'+ownBand[1].lvl"
-          [genre]="ownBand[1].genre"
-          
-          [clickable]="true"
-          [compact]="true"
-          [disabled]="ownBand[1].hasAlreadyTakenTurn"
-
-          [borderColor]="getRarity(ownBand[1].rarity).color"
-
-          (click)="selectMusician(1)">
-            hp:{{ownBand[1].battleStats.hp}}/{{ownBand[1].baseStats.hp}}
-          </app-custom-card>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <app-custom-card
-          class="option-card"
-          [title]="ownBand[2].name+' Lvl.'+ownBand[2].lvl"
-          [genre]="ownBand[2].genre"
-          
-          [clickable]="true"
-          [compact]="true"
-          [disabled]="ownBand[2].hasAlreadyTakenTurn"
-
-          [borderColor]="getRarity(ownBand[2].rarity).color"
-
-          (click)="selectMusician(2)">
-            hp:{{ownBand[2].battleStats.hp}}/{{ownBand[2].baseStats.hp}}
-          </app-custom-card>
-        </ion-col>
-          
-        <ion-col>
-          <app-custom-card
-          class="option-card"
-          [title]="ownBand[3].name+' Lvl.'+ownBand[3].lvl"
-          [genre]="ownBand[3].genre"
-          
-          [clickable]="true"
-          [compact]="true"
-          [disabled]="ownBand[3].hasAlreadyTakenTurn"
-
-          [borderColor]="getRarity(ownBand[3].rarity).color"
-
-          (click)="selectMusician(3)">
-            hp:{{ownBand[3].battleStats.hp}}/{{ownBand[3].baseStats.hp}}
-          </app-custom-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    </div>
   </div>
 
 
 
-  <div *ngIf="selfStatus=='powerChoice'">
+  <div *ngIf="selfStatus=='techChoice'">
     <div class="flex-center hint">
-      <ion-button *ngIf="selfStatus=='powerChoice'" color="dark" fill="clear" (click)="goBack()">
+      <ion-button *ngIf="selfStatus=='techChoice'" color="dark" fill="clear" (click)="goBack()">
         <ion-icon color="danger" name="play-back"></ion-icon>
       </ion-button>
       <ion-text>Choose a power!</ion-text>
     </div>
-    
-    <ion-grid *ngIf="selfStatus=='powerChoice'">
-      <ion-row>
-        <ion-col>
-          <app-power-block [power]="powers[0]" (click)="selectPower(0)"></app-power-block>
-        </ion-col>
-          
-        <ion-col>
-          <app-power-block [power]="powers[1]" (click)="selectPower(1)"></app-power-block>
-        </ion-col>
-      </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <app-power-block [power]="powers[2]" (click)="selectPower(2)"></app-power-block>
-        </ion-col>
-          
-        <ion-col>
-          <app-power-block [power]="powers[3]" (click)="selectPower(3)"></app-power-block>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div class="flex-center button-container">
+      <app-tech-card
+      *ngFor="let technique of techniques"
+      [technique]="technique"
+      (click)="selectTechnique(technique)"
+      ></app-tech-card>
+    </div>
   </div>
 
 
@@ -124,51 +47,16 @@
       </ion-button>
       <ion-text>Choose a target!</ion-text>
     </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <app-stat-block
+    <div class="flex-center button-container">
+          <app-stat-card
+          *ngFor="let target of targets"
           class="option-card"
-          [musician]="targets[0]"
-          (clickEvent)="selectTarget(0)"
+          [musician]="target"
+          (click)="selectTarget(target)"
           [clickable]="true"
-          [disabled]="!targets[0].targetable"
-          ></app-stat-block>
-        </ion-col>
-          
-        <ion-col>
-          <app-stat-block
-          class="option-card"
-          [musician]="targets[1]"
-          (clickEvent)="selectTarget(1)"
-          [clickable]="true"
-          [disabled]="!targets[1].targetable"
-          ></app-stat-block>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <app-stat-block
-          class="option-card"
-          [musician]="targets[2]"
-          (clickEvent)="selectTarget(2)"
-          [clickable]="true"
-          [disabled]="!targets[2].targetable"
-          ></app-stat-block>
-        </ion-col>
-          
-        <ion-col>
-          <app-stat-block
-          class="option-card"
-          [musician]="targets[3]"
-          (clickEvent)="selectTarget(3)"
-          [clickable]="true"
-          [disabled]="!targets[3].targetable"
-          ></app-stat-block>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          [disabled]="!target.targetable"
+          ></app-stat-card>
+    </div>
   </div>
 
 

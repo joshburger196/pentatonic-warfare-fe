@@ -37,10 +37,7 @@ export class CustomCardComponent  implements OnInit {
     if(this.disabled)
       this.extraClasses+=" disabled";
     if(this.compact)
-    {
       this.extraClasses+=" compact";
-      console.log("I'm a custom card and I'm supposed to be compact");
-    }
     if(this.clickable)//double check this upon implementation of click animations
       this.extraClasses+=" clickable";
   }

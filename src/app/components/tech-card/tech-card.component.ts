@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Technique } from 'src/app/models/technique';
 
 @Component({
-  selector: 'app-power-block',
-  templateUrl: './power-block.component.html',
-  styleUrls: ['./power-block.component.scss'],
+  selector: 'app-tech-card',
+  templateUrl: './tech-card.component.html',
+  styleUrls: ['./tech-card.component.scss'],
 })
-export class PowerBlockComponent  implements OnInit {
+export class TechCardComponent  implements OnInit {
 
-  @Input() power:Technique|undefined;
+  @Input() technique:Technique|undefined;
   @Output("click") clickEventEmitter=new EventEmitter<Technique>();
 
   cardClass:string="";
@@ -17,9 +17,9 @@ export class PowerBlockComponent  implements OnInit {
 
   ngOnInit() {}
 
-  onClick()
+  emitTech()
   {
-    this.clickEventEmitter.emit(this.power)
+    this.clickEventEmitter.emit(this.technique)
   }
 
 }
