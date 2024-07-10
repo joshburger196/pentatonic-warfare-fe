@@ -58,7 +58,7 @@ export class BattleControlComponent  implements OnInit {
   selectTechnique(technique:Technique)
   {
     this.selectedTech=technique;
-    if(this.selectedTech.isSingleTarget)
+    if(this.selectedTech.isOpponentSingleTarget)
     {
       this.targets=this.opponentBand;
       this.selfStatus=menuStatus.targetChoice;

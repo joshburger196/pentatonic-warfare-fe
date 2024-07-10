@@ -1,6 +1,3 @@
-import { Effect } from "./effect";
-import { genreId } from "./genreEnum";
-
 export class Technique
 {
     id:string;
@@ -8,9 +5,14 @@ export class Technique
     genre:string;
     instrument:string;
     description:string;
+    allyEffect:string|null;
+    allyEffectIntesity:number|null;
+    isAllySingleTarget:boolean|null;
     damage:number|null;
-    isSingleTarget:boolean;
-    effect:string|null;
+    opponentEffect:string|null;
+    opponentEffectIntensity:number|null;
+    opponentEffectProbability:number|null;
+    isOpponentSingleTarget:boolean|null;
     evolutionOf:string|null;
     constructor(
         id:string,
@@ -18,9 +20,14 @@ export class Technique
         genre:string,
         instrument:string,
         description:string,
+        allyEffect:string|null,
+        allyEffectIntesity:number|null,
+        isAllySingleTarget:boolean|null,
         damage:number|null,
-        isSingleTarget:boolean,
-        effect:string|null,
+        opponentEffect:string|null,
+        opponentEffectIntensity:number|null,
+        opponentEffectProbability:number|null,
+        isOpponentSingleTarget:boolean|null,
         evolutionOf:string|null)
     {
         this.id=id;
@@ -28,9 +35,14 @@ export class Technique
         this.genre=genre;
         this.instrument=instrument;
         this.description=description;
+        this.allyEffect=allyEffect;
+        this.allyEffectIntesity=allyEffectIntesity;
+        this.isAllySingleTarget=isAllySingleTarget;
         this.damage=damage;
-        this.isSingleTarget=isSingleTarget;
-        this.effect=effect;
+        this.opponentEffect=opponentEffect;
+        this.opponentEffectIntensity=opponentEffectIntensity;
+        this.opponentEffectProbability=opponentEffectProbability;
+        this.isOpponentSingleTarget=isOpponentSingleTarget;
         this.evolutionOf=evolutionOf;
     }
 }

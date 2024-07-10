@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Effect } from 'src/app/models/effect';
 import { genreId } from 'src/app/models/genreEnum';
 import { Instrument } from 'src/app/models/instrument';
 import { Musician } from 'src/app/models/musician';
-import { Technique } from 'src/app/models/technique';
 import { Stats } from 'src/app/models/stats';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -15,12 +13,6 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class StagePage implements OnInit {
 
   musicianList:Musician[]=[];
-
-  power1:Technique=new Technique("T100","Pentatonic Solo",genreId.blues,Instrument.guitar,"Basic scales!",10,true,null,null);
-  power2:Technique=new Technique("T101","The 4 Chords",genreId.pop,Instrument.guitar,"CAGED chords!",2,false,"E111",null);
-  power3:Technique=new Technique("T102","Amp Feedback",genreId.metal,Instrument.guitar,"About to get heavy...",2,false,"E222",null);
-  power4:Technique=new Technique("T103","Power Chords",genreId.rock,Instrument.guitar,"Thicken the rythm section!",4,false,null,null)
-  powerArray:Technique[]=[this.power1,this.power2,this.power3,this.power4];
 
   powerIdArray:string[]=["T100","T101","T102","T103"];
 

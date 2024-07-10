@@ -27,7 +27,7 @@
   <div *ngIf="technique.damage!=null && technique.damage>0">
     <ion-icon color="danger" name="flame"></ion-icon>
     {{technique.damage}}
-    <ion-icon *ngIf="technique.isSingleTarget" name="person"></ion-icon>
-    <ion-icon *ngIf="!technique.isSingleTarget" name="people"></ion-icon>
+    <ion-icon *ngIf="technique.isOpponentSingleTarget" name="person"></ion-icon>
+    <ion-icon *ngIf="!technique.isOpponentSingleTarget" name="people"></ion-icon>
   </div>
 </app-custom-card>

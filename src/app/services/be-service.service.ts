@@ -48,9 +48,14 @@ export class BeService {
         data.genre,
         data.instrument,
         data.description,
+        data.ally_effect,
+        data.ally_effect_intensity,
+        data.is_ally_single_target==1,
         data.damage,
-        data.is_single_target==1,
-        data.effect,
+        data.opponent_effect,
+        data.opponent_effect_intensity,
+        data.opponent_effect_probability,
+        data.is_opponent_single_target==1,
         data.evolution_of
       );
       return [techObj];
@@ -71,9 +76,14 @@ export class BeService {
             techData.genre,
             techData.instrument,
             techData.description,
+            techData.ally_effect,
+            techData.ally_effect_intensity,
+            techData.is_ally_single_target==1,
             techData.damage,
-            techData.is_single_target==1,
-            techData.effect,
+            techData.opponent_effect,
+            techData.opponent_effect_intensity,
+            techData.opponent_effect_probability,
+            techData.is_opponent_single_target==1,
             techData.evolution_of
           );
           techArray.push(techObj);

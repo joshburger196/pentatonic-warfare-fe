@@ -1,4 +1,3 @@
-import { Effect } from "./effect";
 import { MusicianTemplate } from "./musicianTemplate";
 import { Technique } from "./technique";
 

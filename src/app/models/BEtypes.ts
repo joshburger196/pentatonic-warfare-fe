@@ -51,9 +51,14 @@ export interface techniqueBEType
     genre:string,
     instrument:string,
     description:string,
-    is_single_target:number,
+    ally_effect:string|null,
+    ally_effect_intensity:number|null,
+    is_ally_single_target:number|null,
     damage:number|null,
-    effect:string|null,
+    opponent_effect:string|null,
+    opponent_effect_intensity:number|null,
+    opponent_effect_probability:number|null,
+    is_opponent_single_target:number|null,
     evolution_of:string|null,
 }
 
@@ -64,9 +69,13 @@ export function isValidTechniqueData(technique:any): technique is techniqueBETyp
     typeof technique.genre === "string" &&
     typeof technique.instrument === "string" &&
     typeof technique.description === "string" &&
-    typeof technique.is_single_target === "number" &&
+    (typeof technique.ally_effect === "string" || technique.ally_effect===null)  &&
+    (typeof technique.ally_effect_intensity === "number" || technique.ally_effect_intensity===null) &&
     (typeof technique.damage === "number" || technique.damage===null)  &&
-    (typeof technique.effect === "string" || technique.effect===null) &&
+    (typeof technique.opponent_effect === "string" || technique.opponent_effect===null) &&
+    (typeof technique.opponent_effect_intensity === "number" || technique.opponent_effect_intensity===null) &&
+    (typeof technique.opponent_effect_probability === "number" || technique.opponent_effect_probability===null) &&
+    (typeof technique.is_opponent_single_target === "number" || technique.is_opponent_single_target===null) &&
     (typeof technique.evolution_of === "string" || technique.evolution_of===null)   
 }
 
