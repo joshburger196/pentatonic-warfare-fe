@@ -1,7 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Battle } from 'src/app/models/battle';
 import { menuStatus } from 'src/app/models/menuStatus';
 import { Musician } from 'src/app/models/musician';
 import { Technique } from 'src/app/models/technique';
+import { BattleService } from 'src/app/services/battle-service.service';
+import { IndexOfMusicianService } from 'src/app/services/index-of-musician.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { getRarity } from 'src/assets/static-data/rarities';
 
@@ -11,17 +14,21 @@ import { getRarity } from 'src/assets/static-data/rarities';
   styleUrls: ['./battle-control.component.scss'],
 })
 export class BattleControlComponent  implements OnInit {
-  @Input() ownBand:Musician[]=[];
-  @Input() opponentBand:Musician[]=[];
+  @Input() battle:Battle=new Battle([],[]);
 
   selfStatus:menuStatus=menuStatus.turnStart;
   iSelectedMusician:number=-1;
   techniques:Technique[]=[];
   selectedTech:Technique|undefined;
   targets:Musician[]=[];
+  iSelectedTarget:number=-1;
   selectedTarget:Musician|undefined;
 
-  constructor(private localStorageService:LocalStorageService) { }
+  constructor(
+    private localStorageService:LocalStorageService,
+    private battleService:BattleService,
+    private iomService:IndexOfMusicianService
+  ) { }
 
   ngOnInit() {}
 
@@ -39,6 +46,7 @@ export class BattleControlComponent  implements OnInit {
     this.techniques=[];
     this.selectedTech=undefined;
     this.targets=[];
+    this.iSelectedTarget=-1;
     this.selectedTarget=undefined;
     
     console.log("Turn started!")
@@ -47,7 +55,7 @@ export class BattleControlComponent  implements OnInit {
   selectMusician(musician:Musician)
   {
     this.selfStatus=menuStatus.techChoice;
-    this.iSelectedMusician=this.indexOfMusician(this.ownBand,musician.id);
+    this.iSelectedMusician=this.iomService.indexOfMusician(this.battle.band1,musician.id);
     musician.knownTechniques.forEach(techID=>
     {
       this.techniques.push(this.localStorageService.getTechnique(techID))
@@ -60,30 +68,29 @@ export class BattleControlComponent  implements OnInit {
     this.selectedTech=technique;
     if(this.selectedTech.isOpponentSingleTarget)
     {
-      this.targets=this.opponentBand;
+      this.targets=this.battle.band2;
       this.selfStatus=menuStatus.targetChoice;
     }
     else
-      this.excecuteTech();
+      this.executeTech();
   }
 
   selectTarget(target:Musician)
   {
     this.selectedTarget=target;
-    this.excecuteTech();
+    this.iSelectedTarget=this.iomService.indexOfMusician(this.targets,target.id);
+    this.executeTech();
   }
 
-  excecuteTech()
+  executeTech()
   {
     this.selfStatus=menuStatus.musicianAction;
 
     //Calculate new battleState with BattleService
+    if(this.selectedTech!=undefined)
+      this.battleService.executeTech(this.battle,this.iSelectedMusician,this.selectedTech.id,this.iSelectedTarget);
 
-    this.iSelectedMusician;
-    this.selectedTech?.id;
-    this.selectedTarget?.id;
-
-    this.ownBand[this.iSelectedMusician].hasAlreadyTakenTurn=true;
+    this.battle.band1[this.iSelectedMusician].hasAlreadyTakenTurn=true;
 
     this.nextAction();
   }
@@ -93,7 +100,7 @@ export class BattleControlComponent  implements OnInit {
 
     //Check if there are musicians who haven't acted yet
     var isStillOwnTurn=false;
-    this.ownBand.forEach(musician => {
+    this.battle.band1.forEach(musician => {
       if(!musician.hasAlreadyTakenTurn)
         isStillOwnTurn=true;
     });
@@ -107,8 +114,8 @@ export class BattleControlComponent  implements OnInit {
   endTurn()
   {
     //reset turn status for all musicians
-    for(var i=0;i<this.ownBand.length;i++)
-      this.ownBand[i].hasAlreadyTakenTurn=false;
+    for(var i=0;i<this.battle.band1.length;i++)
+      this.battle.band1[i].hasAlreadyTakenTurn=false;
 
     this.selfStatus=menuStatus.turnEnd;
   }
@@ -127,13 +134,5 @@ export class BattleControlComponent  implements OnInit {
       this.targets=[];
       this.selfStatus=menuStatus.techChoice;
     }
-  }
-
-  indexOfMusician(band:Musician[], id:string):number
-  {
-    for(let i=0;i<band.length;i++)
-      if(band[i].id===id)
-        return i;
-    throw new Error(`Musician with id ${id} not found. Band: ${JSON.stringify(band)}`);
   }
 }

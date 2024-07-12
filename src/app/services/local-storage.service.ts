@@ -200,6 +200,5 @@ export class LocalStorageService {
     else
       throw new Error(`Technique with id ${id} not found in runtime assets.`);
   }
-
 }
 

@@ -12,3 +12,14 @@ export const genres:Genre[]=
     new Genre("G007","Funk","#ff5100",false,[],[]),
     new Genre("G008","Wild","#ff5100",false,[],[])
 ]
+
+export function getGenre(id:string)
+{
+  //console.log(`Debugging Runtime Assets:${JSON.stringify(LocalStorageService.runtimeAssets)}`)
+  //to implement: [if id is valid tech ID]
+  const genreToGet=genres.find(genre=>genre.id===id)
+  if(genreToGet!=undefined)
+    return genreToGet;
+  else
+    throw new Error(`Genre with id ${id} not found in static assets.`);
+}

@@ -9,7 +9,7 @@
     </div>
     <div class="flex-center button-container">
       <app-stat-card
-        *ngFor="let musician of ownBand"
+        *ngFor="let musician of battle.band1"
         [musician]="musician"
         [clickable]="true"
         [disabled]="musician.hasAlreadyTakenTurn"
@@ -26,7 +26,7 @@
       <ion-button *ngIf="selfStatus=='techChoice'" color="dark" fill="clear" (click)="goBack()">
         <ion-icon color="danger" name="play-back"></ion-icon>
       </ion-button>
-      <ion-text>Choose a power!</ion-text>
+      <ion-text>Choose a technique</ion-text>
     </div>
 
     <div class="flex-center button-container">
