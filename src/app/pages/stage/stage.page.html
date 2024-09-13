@@ -3,7 +3,7 @@
     <ion-title>stage</ion-title>
   </ion-toolbar>
 
-  <app-band-stats-view [band]="opponentBand"></app-band-stats-view>
+  <app-band-stats-view [band]="getOpponentBand()"></app-band-stats-view>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -11,11 +11,13 @@
   
 
   <app-stage-screen></app-stage-screen>
+  {{battle|json}}
 
 </ion-content>
 
 <ion-footer>
 
-  <app-battle-control [battle]="battle"></app-battle-control>
+  
+  <app-battle-control *ngIf="battle!=undefined" [battle]="battle"></app-battle-control>
 
 </ion-footer>

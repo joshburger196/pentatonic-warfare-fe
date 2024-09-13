@@ -79,6 +79,28 @@ export function isValidTechniqueData(technique:any): technique is techniqueBETyp
     (typeof technique.evolution_of === "string" || technique.evolution_of===null)   
 }
 
+export interface bandBEType
+{
+    id:string,
+    name:string,
+    id_owner:string,
+    id_mus_1:string,
+    id_mus_2:string,
+    id_mus_3:string,
+    id_mus_4:string
+}
+
+export function isValidBandData(data:any): data is bandBEType
+{
+  return typeof data.id === "string" &&
+    typeof data.name === "string" &&
+    typeof data.id_owner === "string" &&
+    typeof data.id_mus_1 === "string" &&
+    (typeof data.id_mus_2 === "string" || data.id_mus_2===null) &&
+    (typeof data.id_mus_3 === "string" || data.id_mus_3===null) &&
+    (typeof data.id_mus_4 === "string" || data.id_mus_4===null)
+}
+
 export interface accountBEType
 {
     id:string,

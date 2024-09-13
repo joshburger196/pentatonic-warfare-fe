@@ -7,10 +7,12 @@ import { Musician } from 'src/app/models/musician';
   styleUrls: ['./band-stats-view.component.scss'],
 })
 export class BandStatsViewComponent  implements OnInit {
-  @Input() band:Musician[]|undefined;
+  @Input() band!:Musician[];
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(JSON.stringify(this.band))
+  }
 
 }

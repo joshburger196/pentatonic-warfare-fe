@@ -8,11 +8,14 @@ Main Implementation
 2.Start Battle with musician selection
 3.Add Rarity to Musician objects
 
+Battle Implementation
+1. Implement Merge sort to sort musicians into a turn order based on their spd
 
-2. Remove redundancy from be-service
+Code cleaning
+2. Remove redundancy from be-service 💛 (Developped and awaiting testing)
     Most functions here are written to parse 1 object or an array of objects
     and the code for these 2 options is written twice, and this can be fixed
-    with recursion (take isValidMusicianObj as an exampl)
+    with recursion (take isValidMusicianObj as an example)
 
 3. Optimise error catching in be-service and ls-service
     Read functions, check types, standardise error msgs

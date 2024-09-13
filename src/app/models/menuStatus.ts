@@ -4,6 +4,6 @@ export enum menuStatus
     musicianChoice="musicianChoice",
     techChoice="techChoice",
     targetChoice="targetChoice",
-    musicianAction="musicianAction",
+    displayResults="displayResults",
     turnEnd="turnEnd"
 }

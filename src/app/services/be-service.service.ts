@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Musician } from '../models/musician';
-import { isValidAccountInfoData, isValidGameAssetsData, isValidLearnableTechData, isValidMusicianData, isValidTechniqueData, isValidTemplateData, musicianBEType } from '../models/BEtypes';
+import { bandBEType, isValidAccountInfoData, isValidBandData, isValidGameAssetsData, isValidLearnableTechData, isValidMusicianData, isValidTechniqueData, isValidTemplateData, musicianBEType, techniqueBEType, templateBEType } from '../models/BEtypes';
 import { Stats } from '../models/stats';
 import { Technique } from '../models/technique';
 import { Account } from '../models/account';
 import { GameAssets } from '../models/gameAssets';
 import { MusicianTemplate } from '../models/musicianTemplate';
+import { Band } from '../models/band';
 
 @Injectable({
   providedIn: 'root'
@@ -37,29 +38,35 @@ export class BeService {
       throw new Error("Invalid Game Assets from Back-end")
   }
 
+  private parseSingleTech(tech:techniqueBEType):Technique
+  {
+    //assumes tech is valid
+    return new Technique(
+      tech.id,
+      tech.name,
+      tech.genre,
+      tech.instrument,
+      tech.description,
+      tech.ally_effect,
+      tech.ally_effect_intensity,
+      tech.is_ally_single_target==1,
+      tech.damage,
+      tech.opponent_effect,
+      tech.opponent_effect_intensity,
+      tech.opponent_effect_probability,
+      tech.is_opponent_single_target==1,
+      tech.evolution_of
+    );
+  }
+
   private parseTechData(data:any):Technique[]
   {
     //if data is a single technique object
     if(isValidTechniqueData(data))
     {
-      var techObj=new Technique(
-        data.id,
-        data.name,
-        data.genre,
-        data.instrument,
-        data.description,
-        data.ally_effect,
-        data.ally_effect_intensity,
-        data.is_ally_single_target==1,
-        data.damage,
-        data.opponent_effect,
-        data.opponent_effect_intensity,
-        data.opponent_effect_probability,
-        data.is_opponent_single_target==1,
-        data.evolution_of
-      );
-      return [techObj];
+      return [this.parseSingleTech(data)];
     }
+
     //Or if data is an array...
     else if(Array.isArray(data))
     {
@@ -70,22 +77,7 @@ export class BeService {
         if(isValidTechniqueData(potentialTech))
         {
           var techData=potentialTech;
-          var techObj=new Technique(
-            techData.id,
-            techData.name,
-            techData.genre,
-            techData.instrument,
-            techData.description,
-            techData.ally_effect,
-            techData.ally_effect_intensity,
-            techData.is_ally_single_target==1,
-            techData.damage,
-            techData.opponent_effect,
-            techData.opponent_effect_intensity,
-            techData.opponent_effect_probability,
-            techData.is_opponent_single_target==1,
-            techData.evolution_of
-          );
+          var techObj=this.parseSingleTech(techData)
           techArray.push(techObj);
         }
         else
@@ -93,29 +85,46 @@ export class BeService {
       })
       return techArray; //RETURN ARRAY OF TECHNIQUES
     }
+
+    //If it's not a tech or an array of techs, something went wrong
     else
       throw new Error("Invalid Technique Data from Back-end")
   }
 
+  private parseSingleTemplate(template:templateBEType):MusicianTemplate
+  {
+    return new MusicianTemplate(
+      template.id,
+      template.name,
+      template.description,
+      template.rarity,
+      template.genre,
+      template.instrument,
+      new Stats(template.base_hp,template.base_def,template.base_atk,template.base_acc,template.base_spd)
+    )
+  }
+
   private parseTemplateData(templateData:any,learnableTechData:any):MusicianTemplate[]
   {
-    //Parse musician templates first
-    if(Array.isArray(templateData))
+    //parses musician templates and learnale techniques into musician template objects
+    //therefore 2 db queries are parsed in 1 set of MusicianTemplate objects
+    //First the template data is parsed, then the learnableTechnique data
+
+    var templateArray:MusicianTemplate[]=[];
+
+    if(isValidTemplateData(templateData))
     {
-      var templateArray:MusicianTemplate[]=[];
+      templateArray.push(this.parseSingleTemplate(templateData))
+    }
+
+    //If template data is an array
+    else if(Array.isArray(templateData))
+    {
       templateData.forEach(template=>
       {
         if(isValidTemplateData(template))
         {
-          templateArray.push(new MusicianTemplate(
-            template.id,
-            template.name,
-            template.description,
-            template.rarity,
-            template.genre,
-            template.instrument,
-            new Stats(template.base_hp,template.base_def,template.base_atk,template.base_acc,template.base_spd),
-          ))
+          templateArray.push(this.parseSingleTemplate(template))
         }
         else
           throw new Error("Invalid Musician Templates from Back-end")
@@ -155,18 +164,92 @@ export class BeService {
       throw new Error("Invalid Learnable Techniques from Back-end")
   }
 
-  fetchAccountAssets(accountID:string):Observable<{"account_info":Account,"account_musicians":Musician[]}>
+  fetchAccountAssets(accountID:string):Observable<{"account_info":Account,"account_musicians":Musician[],"account_bands":Band[]}>
   {
     console.log("I'm calling the BE for Account Data");
     return this.http.get(`http://localhost:3000/account/${accountID}`).pipe
     (
       map(data=>
       {
-        if("account_info" in data && "account_musicians" in data)
-          return {"account_info":this.parseAccountInfoData(data.account_info),"account_musicians":this.parseMusicianData(data.account_musicians)}
+        if("account_info" in data && "account_musicians" in data && "account_bands" in data)
+          return {"account_info":this.parseAccountInfoData(data.account_info),
+                  "account_musicians":this.parseMusicianData(data.account_musicians),
+                  "account_bands":this.parseBandData(data.account_bands)}
         else
           throw new Error("Invalid Account data from Back-end. Expected fields 'account_info' and 'account_musicians'.");
       })
+    );
+  }
+
+  private parseSingleBand(band:bandBEType):Band
+  {
+    //turn id1 id2 3 4 into mus id array
+    var musicianIDArray:string[]=[band.id_mus_1];
+    if(band.id_mus_2!=null)
+      musicianIDArray.push(band.id_mus_2)
+    if(band.id_mus_3!=null)
+      musicianIDArray.push(band.id_mus_3)
+    if(band.id_mus_4!=null)
+      musicianIDArray.push(band.id_mus_4)
+
+    return new Band(
+      band.id,
+      band.name,
+      band.id_owner,
+      musicianIDArray
+    );
+  }
+
+  private parseBandData(data:any):Band[]
+  {
+    //If data is a single band object:
+    if(isValidBandData(data))
+      return [this.parseSingleBand(data)]; //RETURN SINGLE BAND
+    
+    //otherwise... if data is an array...
+    else if(Array.isArray(data))
+    {
+      var bandArray:Band[]=[];
+      data.forEach(potentialBand=>
+      {
+        //if the elements of the array are valid bands...
+        if(isValidBandData(potentialBand))
+          bandArray.push(this.parseSingleBand(potentialBand));
+        else
+          throw new Error(`Invalid Band Data from Back-end: ${JSON.stringify(potentialBand)}`)
+      });
+      return bandArray; //RETURN ARRAY OF Bands
+
+    }
+    throw new Error(`Invalid Band Data from Back-end: ${JSON.stringify(data)}`)
+  }
+
+  private parseSingleMusician(musician:musicianBEType):Musician
+  {
+    var stats=new Stats(musician.hp,musician.def,musician.atk,musician.acc,musician.spd);
+    var techniques:string[]=[];
+
+    //Always only has 4 techniques, the last two are optional.
+    techniques.push(musician.tech_1);
+    techniques.push(musician.tech_2);
+    if(musician.tech_3!=null)
+      techniques.push(musician.tech_3);
+    if(musician.tech_4!=null)
+      techniques.push(musician.tech_4);
+
+    return new Musician(
+      musician.id,
+      musician.genre,
+      musician.instrument,
+      musician.rarity,
+      musician.template,
+      musician.found_by,
+      musician.name,
+      musician.description,
+      techniques,
+      musician.exp,
+      musician.lvl,
+      stats
     );
   }
 
@@ -174,33 +257,8 @@ export class BeService {
   {
     //If data is a single musician object:
     if(isValidMusicianData(data))
-    {
-      var stats=new Stats(data.hp,data.def,data.atk,data.acc,data.spd);
-      var techniques:string[]=[];
+      return [this.parseSingleMusician(data)]; //RETURN SINGLE MUSICIAN
 
-      //Always only has 4 techniques, the last two are optional.
-      techniques.push(data.tech_1);
-      techniques.push(data.tech_2);
-      if(data.tech_3!=null)
-        techniques.push(data.tech_3);
-      if(data.tech_4!=null)
-        techniques.push(data.tech_4);
-
-      var musicianObj=new Musician(
-        data.id,
-        data.genre,
-        data.instrument,
-        data.rarity,
-        data.template,
-        data.name,
-        data.description,
-        techniques,
-        data.exp,
-        data.lvl,
-        stats
-      );
-      return [musicianObj]; //RETURN SINGLE MUSICIAN
-    }
     //otherwise... if data is an array...
     else if(Array.isArray(data))
     {
@@ -209,34 +267,7 @@ export class BeService {
       {
         //if the elements of the array are valid musicians...
         if(isValidMusicianData(potentialMusician))
-        {
-          var musData=potentialMusician;
-          var stats=new Stats(musData.hp,musData.def,musData.atk,musData.acc,musData.spd);
-          var techniques:string[]=[];
-
-          //Always only has 4 techniques, the last two are optional.
-          techniques.push(musData.tech_1);
-          techniques.push(musData.tech_2);
-          if(musData.tech_3!=null)
-            techniques.push(musData.tech_3);
-          if(musData.tech_4!=null)
-            techniques.push(musData.tech_4);
-
-          var musicianObj=new Musician(
-            musData.id,
-            musData.genre,
-            musData.instrument,
-            musData.rarity,
-            musData.template,
-            musData.name,
-            musData.description,
-            techniques,
-            musData.exp,
-            musData.lvl,
-            stats
-          );
-          musicianArray.push(musicianObj);
-        }
+          musicianArray.push(this.parseSingleMusician(potentialMusician));
         else
           throw new Error("Invalid Musician Data from Back-end")
       });

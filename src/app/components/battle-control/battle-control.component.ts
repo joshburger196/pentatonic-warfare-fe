@@ -1,10 +1,8 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Battle } from 'src/app/models/battle';
 import { menuStatus } from 'src/app/models/menuStatus';
 import { Musician } from 'src/app/models/musician';
 import { Technique } from 'src/app/models/technique';
-import { BattleService } from 'src/app/services/battle-service.service';
-import { IndexOfMusicianService } from 'src/app/services/index-of-musician.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { getRarity } from 'src/assets/static-data/rarities';
 
@@ -14,21 +12,43 @@ import { getRarity } from 'src/assets/static-data/rarities';
   styleUrls: ['./battle-control.component.scss'],
 })
 export class BattleControlComponent  implements OnInit {
-  @Input() battle:Battle=new Battle([],[]);
+  @Input("battle") battle!:Battle;
 
   selfStatus:menuStatus=menuStatus.turnStart;
-  iSelectedMusician:number=-1;
+
+  playerBandId="";
+  opponentBandId="";
+  
+  idSelectedMusician:string="";
   techniques:Technique[]=[];
   selectedTech:Technique|undefined;
   targets:Musician[]=[];
-  iSelectedTarget:number=-1;
+  idSelectedTarget:string="";
   selectedTarget:Musician|undefined;
 
+  resultMsgs:string[]=[];
+  iResultMsg:number=0;
+
   constructor(
-    private localStorageService:LocalStorageService,
-    private battleService:BattleService,
-    private iomService:IndexOfMusicianService
-  ) { }
+  )
+  {
+    let accountId=LocalStorageService.runtimeAccount?.id
+    
+    console.log(`I'm battle-control's constructor and the battle object is:
+      ${JSON.stringify(this.battle)}`)
+
+    if(this.battle.atkBand.ownerId===accountId)
+    {
+      this.playerBandId=this.battle.atkBand.id;
+      this.opponentBandId=this.battle.defBand.id;
+    }
+
+    else if(this.battle.defBand.ownerId===accountId)
+    {
+      this.playerBandId=this.battle.defBand.id;
+      this.opponentBandId=this.battle.atkBand.id;
+    } 
+  }
 
   ngOnInit() {}
 
@@ -42,12 +62,14 @@ export class BattleControlComponent  implements OnInit {
     this.selfStatus=menuStatus.musicianChoice;
 
     //reset all values, just in case
-    this.iSelectedMusician=-1;
+    this.idSelectedMusician="";
     this.techniques=[];
     this.selectedTech=undefined;
     this.targets=[];
-    this.iSelectedTarget=-1;
+    this.idSelectedTarget="";
     this.selectedTarget=undefined;
+    this.resultMsgs=[];
+    this.iResultMsg=0;
     
     console.log("Turn started!")
   }
@@ -55,10 +77,10 @@ export class BattleControlComponent  implements OnInit {
   selectMusician(musician:Musician)
   {
     this.selfStatus=menuStatus.techChoice;
-    this.iSelectedMusician=this.iomService.indexOfMusician(this.battle.band1,musician.id);
+    this.idSelectedMusician=musician.id;
     musician.knownTechniques.forEach(techID=>
     {
-      this.techniques.push(this.localStorageService.getTechnique(techID))
+      this.techniques.push(LocalStorageService.getTechnique(techID))
     })
     console.log("Musician chosen!")
   }
@@ -68,7 +90,7 @@ export class BattleControlComponent  implements OnInit {
     this.selectedTech=technique;
     if(this.selectedTech.isOpponentSingleTarget)
     {
-      this.targets=this.battle.band2;
+      this.targets=this.battle.getMusiciansByBand(this.opponentBandId);
       this.selfStatus=menuStatus.targetChoice;
     }
     else
@@ -78,34 +100,45 @@ export class BattleControlComponent  implements OnInit {
   selectTarget(target:Musician)
   {
     this.selectedTarget=target;
-    this.iSelectedTarget=this.iomService.indexOfMusician(this.targets,target.id);
+    this.idSelectedTarget=target.id;
     this.executeTech();
   }
 
   executeTech()
   {
-    this.selfStatus=menuStatus.musicianAction;
-
-    //Calculate new battleState with BattleService
+    //Calculate new battle state with BattleService
     if(this.selectedTech!=undefined)
-      this.battleService.executeTech(this.battle,this.iSelectedMusician,this.selectedTech.id,this.iSelectedTarget);
+    {
+      /*this.battle
+      this.resultMsgs;
+      this.iResultMsg=-1;*/
+    }
 
-    this.battle.band1[this.iSelectedMusician].hasAlreadyTakenTurn=true;
+    this.displayResults();
+  }
 
-    this.nextAction();
+  displayResults()
+  {
+    if(this.iResultMsg>=this.resultMsgs.length)
+      this.nextAction();
+    else
+    {
+      this.selfStatus=menuStatus.displayResults;
+      this.iResultMsg++;
+    }
   }
 
   nextAction()
   {
 
     //Check if there are musicians who haven't acted yet
-    var isStillOwnTurn=false;
+    /*var isStillOwnRound=false;
     this.battle.band1.forEach(musician => {
       if(!musician.hasAlreadyTakenTurn)
-        isStillOwnTurn=true;
-    });
+        isStillOwnRound=true;
+    });*/
 
-    if(isStillOwnTurn)
+    if(true)
       this.startTurn();
     else
       this.endTurn();
@@ -114,8 +147,8 @@ export class BattleControlComponent  implements OnInit {
   endTurn()
   {
     //reset turn status for all musicians
-    for(var i=0;i<this.battle.band1.length;i++)
-      this.battle.band1[i].hasAlreadyTakenTurn=false;
+    /*for(var i=0;i<this.battle.atkBand.musicians.length;i++)
+      this.battle.atkBand.musicians[i].hasAlreadyTakenTurn=false;*/
 
     this.selfStatus=menuStatus.turnEnd;
   }
@@ -124,7 +157,7 @@ export class BattleControlComponent  implements OnInit {
   {
     if(this.selfStatus==menuStatus.techChoice)
     {
-      this.iSelectedMusician=-1;
+      this.idSelectedMusician="";
       this.techniques=[];
       this.selfStatus=menuStatus.musicianChoice;
     }

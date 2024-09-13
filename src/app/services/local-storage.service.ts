@@ -5,6 +5,7 @@ import { GameAssets } from '../models/gameAssets';
 import { Account } from '../models/account';
 import { Musician } from '../models/musician';
 import { isValidAccountInfoData, isValidMusicianData } from '../models/BEtypes';
+import { Technique } from '../models/technique';
 
 @Injectable({
   providedIn: 'root'
@@ -190,7 +191,7 @@ export class LocalStorageService {
     this.router.navigate(["login"]);
   }
 
-  getTechnique(id:string)
+  static getTechnique(id:string):Technique
   {
     //console.log(`Debugging Runtime Assets:${JSON.stringify(LocalStorageService.runtimeAssets)}`)
     //to implement: [if id is valid tech ID]
@@ -199,6 +200,17 @@ export class LocalStorageService {
       return techToGet;
     else
       throw new Error(`Technique with id ${id} not found in runtime assets.`);
+  }
+
+  static getMusician(id:string):Musician
+  {
+    //console.log(`Debugging Runtime Assets:${JSON.stringify(LocalStorageService.runtimeAssets)}`)
+    //to implement: [if id is valid tech ID]
+    const musicianToGet=LocalStorageService.runtimeAccountMusicians.find(musician=>musician.id===id)
+    if(musicianToGet!=undefined)
+      return musicianToGet;
+    else
+      throw new Error(`Musician with id ${id} not found in runtime assets.`);
   }
 }
 

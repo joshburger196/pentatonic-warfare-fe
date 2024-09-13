@@ -1,10 +1,10 @@
-import { Technique } from "./technique";
 import { Stats } from "./stats";
 
 export class Musician
 {
     id:string;
     template:string;
+    owner:string;
     genre:string;
     instrument:string;
     rarity:string;
@@ -26,6 +26,7 @@ export class Musician
         instrument:string,
         rarity:string,
         template:string,
+        owner:string,
         name:string,
         description:string,
         knownTechniques:string[],
@@ -39,6 +40,7 @@ export class Musician
         this.instrument=instrument;
         this.rarity=rarity;
         this.template=template;
+        this.owner=owner;
         this.name=name;
         this.description=description;
         this.knownTechniques=knownTechniques;
@@ -67,6 +69,7 @@ export class Musician
                 typeof(obj.instrument)==="string" &&
                 typeof(obj.rarity)==="string" &&
                 typeof(obj.template)==="string" &&
+                typeof(obj.owner)==="string" &&
                 typeof(obj.name)==="string" &&
                 typeof(obj.description)==="string" &&
                 typeof(obj.exp)==="number" &&

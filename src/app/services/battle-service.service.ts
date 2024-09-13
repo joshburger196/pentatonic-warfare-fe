@@ -17,12 +17,14 @@ export class BattleService {
     iSelectedMusician:number,
     techID:string,
     iSelectedTarget:number
-  ):{battle:Battle,messages:string[]}
-  {
+  )
+  {/*
 
-    let attacker:Musician=battle.band1[iSelectedMusician];
+    let attacker:Musician=battle.atkBand.musicians[iSelectedMusician];
     let tech:Technique=this.lsService.getTechnique(techID);
-    let defender:Musician=battle.band2[iSelectedMusician];
+    let defender:Musician=battle.defBand.musicians[iSelectedMusician];
+
+    let resultMsgs:string[]=[];
 
     //if inflicts damage
     if(tech.damage!=null)
@@ -49,11 +51,21 @@ export class BattleService {
       {
         isCritical=true;
         console.log("Critical success!")
+        resultMsgs.push("Critical performance!")
       }
 
       //check genre effectiveness
       isEffective=this.isGenreEffective(tech.genre,defender.genre);
       isIneffective=this.isGenreIneffective(tech.genre,defender.genre);
+
+      if(isEffective)
+      {
+        resultMsgs.push("It's super effective!")
+      }
+      else if(isIneffective)
+      {
+        resultMsgs.push("It's not very effective...")
+      }
 
       //check atk vs def
       let advantageRatio=attacker.battleStats.atk/defender.battleStats.def
@@ -64,14 +76,16 @@ export class BattleService {
       
       //inflict damage
       let damageToInflict=tech.damage*advantageRatio
-      battle.band2[iSelectedTarget].battleStats.hp-=damageToInflict;
+      battle.defBand.musicians[iSelectedTarget].battleStats.hp-=damageToInflict;
       console.log(`${defender.name} takes ${damageToInflict} damage!`);
 
-      return {"battle":battle,"messages":["Success or critical!",
-        "Effective or ineffective!",
-        `${defender.name} takes ${damageToInflict} damage!`]};
+      resultMsgs.push(`${defender.name} takes ${damageToInflict} damage!`)
     }
-    return {"battle":battle,"messages":["SKU!"]};
+
+    //Whatever has happened, the attacker has consumed his turn
+    battle.atkBand.musicians[iSelectedMusician].hasAlreadyTakenTurn=true;
+
+    return {"battle":battle,"messages":resultMsgs};*/
   }
 
   isGenreEffective(atkGenreId:string,defGenreId:string):boolean

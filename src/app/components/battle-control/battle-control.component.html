@@ -1,9 +1,9 @@
 <div class="parent-container">
-  <app-caption *ngIf="selfStatus=='turnStart'" text="It's your turn!" (click)="startTurn()"></app-caption>
+  <!--app-caption *ngIf="selfStatus=='turnStart'" text="It's your turn!" (click)="startTurn()"></app-caption>
 
 
 
-  <div *ngIf="selfStatus=='musicianChoice'">
+  <!--div *ngIf="selfStatus=='musicianChoice'">
     <div class="flex-center hint">
       <ion-text>Choose a musician!</ion-text>
     </div>
@@ -17,7 +17,13 @@
       </app-stat-card>
 
     </div>
-  </div>
+  </div-->
+
+
+
+  <app-caption *ngIf="selfStatus=='turnStart'" text="It's your turn!" (click)="startTurn()">
+    
+  </app-caption>
 
 
 
